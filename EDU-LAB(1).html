@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2e7d32">
+<title>EDU-LAB · Aprende, organiza y crece</title>
+<style>
+:root{
+  --bg:#f3f8f3;--card:#fff;--ink:#1b2a1f;--mut:#5f7165;--line:#dbe7dc;--brand:#2e7d32;--brand2:#4caf50;--soft:#e8f5e9;
+  --warn:#b45309;--danger:#dc2626;--shadow:0 1px 2px rgba(20,40,25,.06),0 6px 18px rgba(20,40,25,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1a13;--card:#16241b;--ink:#e8f3ea;--mut:#9db3a2;--line:#25382b;--brand:#66bb6a;--brand2:#43a047;--soft:#1d3324;--warn:#fbbf24;--danger:#f87171;--shadow:0 1px 2px rgba(0,0,0,.3)}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.4;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--brand2);outline-offset:2px}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top h1{font-size:18px;margin:0;flex:1;letter-spacing:.3px}
+.top h1 small{display:block;font-size:11px;font-weight:500;color:var(--mut);letter-spacing:0}
+.ib{position:relative;border:1px solid var(--line);background:var(--card);border-radius:12px;width:40px;height:40px;font-size:18px}
+.ib .dot{position:absolute;top:-5px;right:-5px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;font-weight:700;min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px}
+main{max-width:880px;margin:0 auto;padding:16px 16px 100px}
+#tabs{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+#tabs .in{display:flex;width:100%;max-width:880px}
+#tabs button{flex:1;border:0;background:none;padding:8px 2px 7px;font-size:10.5px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:1px;font-weight:600}
+#tabs button span{font-size:20px;line-height:1.1}
+#tabs button[aria-current=page]{color:var(--brand)}
+#tabs button[aria-current=page] span{transform:translateY(-1px) scale(1.12)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.card h2 .sp{flex:1}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.muted{color:var(--mut);font-size:13px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 14px;font-weight:600;font-size:14px}
+.btn.pri{background:var(--brand2);border-color:var(--brand2);color:#fff}
+.btn.dng{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 10px;font-size:12.5px;border-radius:10px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700;background:var(--soft);color:var(--brand)}
+.chip.c{background:color-mix(in srgb,var(--c) 15%,var(--card));color:var(--c);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.seg{display:inline-flex;background:var(--soft);border-radius:12px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 12px;border-radius:9px;font-size:13px;font-weight:700;color:var(--mut)}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--brand);box-shadow:var(--shadow)}
+/* mascota */
+.hero{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:16px;align-items:center}
+@media(max-width:520px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.mascot{width:100%;max-width:220px;border-radius:20px;overflow:hidden;display:block;animation:sway 4s ease-in-out infinite;transform-origin:50% 100%}
+.mascot.hop{animation:hop .8s ease}
+.mascot svg{width:100%;display:block}
+.pet-art{transform-box:fill-box;transform-origin:center bottom;transition:transform .75s cubic-bezier(.2,.8,.2,1)}
+.mascot.hop .pet-art{animation:pet-grow .8s cubic-bezier(.2,.8,.2,1)}
+.mascot:not(.hop):hover .pet-art{transform:translateY(-3px) scale(1.025)}
+@keyframes sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+@keyframes hop{0%{transform:translateY(0)}25%{transform:translateY(-18px) scale(1.04)}50%{transform:translateY(0)}70%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+@keyframes pet-grow{0%{transform:scale(.88)}45%{transform:translateY(-12px) scale(1.13)}75%{transform:translateY(0) scale(.98)}100%{transform:scale(1)}}
+.streak-card{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,var(--soft),var(--card))}
+.streak-fire{font-size:30px;filter:drop-shadow(0 3px 4px #f9731680)}
+.streak-copy{flex:1}
+.streak-copy b{font-size:15px}
+.streak-copy p{margin:2px 0 0;color:var(--mut);font-size:12px}
+.pet-choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:8px}
+.pet-option{border:1px solid var(--line);border-radius:13px;padding:10px;background:var(--card);text-align:center}
+.pet-option.selected{border-color:var(--brand2);box-shadow:inset 0 0 0 1px var(--brand2);background:var(--soft)}
+.pet-option:disabled{opacity:.55}
+.pet-option span{display:block;font-size:12px;font-weight:700}
+.pet-option small{color:var(--mut);font-size:11px}
+.ai-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px}
+.ai-tabs button[aria-pressed=true]{border-color:var(--brand2);background:var(--soft);color:var(--brand)}
+.ai-output{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}
+.ai-output h3{margin:0 0 8px;font-size:15px}
+.ai-output p,.ai-output li{font-size:13px;line-height:1.55;color:var(--mut)}
+.ai-output ol{padding-left:20px}
+.ai-output p{margin:6px 0}
+.ai-note{font-size:12px;color:var(--mut);margin:10px 0 0}
+.ai-source{min-height:150px}
+.ai-status{font-size:12px;color:var(--mut);margin:8px 0}
+.ai-preview{display:block;max-width:180px;max-height:180px;object-fit:contain;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.ai-question{padding:10px 0;border-top:1px solid var(--line)}
+.ai-question label{display:flex;gap:7px;align-items:flex-start;margin:7px 0;font-size:13px}
+.ai-question input{width:auto;margin:2px 0 0}
+.ai-match{display:flex;gap:8px;align-items:baseline;margin:8px 0;padding:9px;border-radius:10px;background:var(--card)}
+.ai-match b{color:var(--ink)}
+.ai-feedback{font-size:12px;font-weight:700;margin:5px 0}
+.bar{height:14px;background:var(--soft);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#66bb6a,#fbc02d);border-radius:99px;transition:width .6s}
+.mname{background:none;border:0;font-size:22px;font-weight:800;padding:0;text-align:inherit}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+/* items */
+.item{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:14px;background:var(--card);margin-bottom:8px;cursor:pointer;width:100%;text-align:left}
+.item.done{opacity:.62}
+.item.done .t{text-decoration:line-through}
+.item .t{font-weight:700;font-size:14.5px;overflow-wrap:anywhere}
+.item .m{font-size:12px;color:var(--mut);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.item .m .late{color:var(--danger);font-weight:700}
+.chk{flex:none;width:34px;height:34px;border-radius:50%;border:2.5px solid var(--c);background:none;color:var(--c);font-size:16px;font-weight:900;display:grid;place-items:center}
+.chk.on{background:var(--c);color:#fff;cursor:default}
+.subj{display:inline-flex;align-items:center;gap:5px}
+.subj:before{content:"";width:9px;height:9px;border-radius:3px;background:var(--c)}
+.empty{text-align:center;color:var(--mut);padding:18px 8px;font-size:14px}
+.group{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--mut);font-weight:800;margin:14px 2px 6px}
+/* calendario */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .wd{font-size:11px;font-weight:800;color:var(--mut);text-align:center;padding:4px 0}
+.cal .d{aspect-ratio:1/1.05;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:3px;font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.cal .d.o{opacity:.4}
+.cal .d.today{border-color:var(--brand2);box-shadow:inset 0 0 0 1.5px var(--brand2)}
+.cal .d.sel{background:var(--soft);border-color:var(--brand)}
+.dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.dots i.dn{opacity:.35}
+/* horario */
+.tt{display:grid;gap:0;font-size:11px;position:relative}
+.tt .col{position:relative;border-left:1px solid var(--line);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 47px,var(--line) 47px,var(--line) 48px)}
+.tt .hd{font-weight:800;text-align:center;padding:5px 0;color:var(--mut)}
+.tt .hr{height:48px;color:var(--mut);font-size:10px;text-align:right;padding-right:4px}
+.blk{position:absolute;left:2px;right:2px;border-radius:8px;background:color-mix(in srgb,var(--c) 22%,var(--card));border:1.5px solid var(--c);padding:2px 4px;overflow:hidden;font-weight:700;font-size:10.5px;line-height:1.15}
+.blk small{display:block;font-weight:500;opacity:.8}
+/* forms */
+label.f{display:block;font-size:12.5px;font-weight:700;color:var(--mut);margin:10px 0 4px}
+input[type=text],input[type=date],input[type=time],input[type=number],select,textarea{width:100%;border:1px solid var(--line);background:var(--card);border-radius:11px;padding:9px 11px;font-size:14px}
+textarea{min-height:76px;resize:vertical}
+.opt{display:flex;gap:8px;flex-wrap:wrap}
+.opt label{flex:1;min-width:90px;border:2px solid var(--line);border-radius:12px;padding:8px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;display:block}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt label:has(input:checked){border-color:var(--c,var(--brand2));background:color-mix(in srgb,var(--c,var(--brand2)) 14%,var(--card))}
+.opt label:has(input:focus-visible){outline:3px solid var(--brand2)}
+.sw{display:flex;gap:8px;flex-wrap:wrap}
+.sw label{width:34px;height:34px;border-radius:50%;background:var(--c);cursor:pointer;display:grid;place-items:center;border:3px solid transparent}
+.sw label:has(input:checked){border-color:var(--ink)}
+.sw input{position:absolute;opacity:0}
+.err{color:var(--danger);font-size:13px;font-weight:700;margin-top:8px}
+.slot{display:grid;grid-template-columns:78px 1fr 1fr 34px;gap:6px;margin-bottom:6px;align-items:center}
+.slot .room{grid-column:1/4}
+/* dialog */
+dialog{border:0;border-radius:22px;padding:0;width:min(520px,94vw);max-height:90vh;background:var(--card);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,20,12,.55);backdrop-filter:blur(2px)}
+dialog .dc{padding:18px;overflow:auto;max-height:88vh}
+dialog h3{margin:0 0 4px;font-size:18px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;justify-content:flex-end}
+.kv{display:grid;grid-template-columns:100px 1fr;gap:4px 10px;font-size:13.5px;margin:10px 0}
+.kv b{color:var(--mut);font-weight:700}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);border-radius:12px;padding:10px;font-size:13.5px}
+.ev{display:flex;gap:8px;flex-wrap:wrap}
+.ev img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.ev a{display:inline-block;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:12.5px;color:var(--brand)}
+/* tienda */
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.si{border:1px solid var(--line);border-radius:16px;padding:8px;text-align:center;background:var(--card)}
+.si.eq{border-color:var(--brand2);box-shadow:inset 0 0 0 1.5px var(--brand2)}
+.si svg{width:100%;height:auto;border-radius:12px;display:block}
+.si b{display:block;font-size:13px;margin:6px 0 4px}
+/* foco */
+.ring{position:relative;width:230px;height:230px;margin:6px auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .tx{position:absolute;inset:0;display:grid;place-items:center;font-size:46px;font-weight:800;font-variant-numeric:tabular-nums}
+/* toasts */
+#toasts{position:fixed;left:0;right:0;bottom:84px;z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 12px}
+.toast{background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:14px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:tin .3s ease;max-width:520px}
+.toast.big{font-size:18px;background:linear-gradient(90deg,#43a047,#f9a825);color:#fff}
+@keyframes tin{from{opacity:0;transform:translateY(12px)}}
+.notif{padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.notif.un{font-weight:700}
+.fab{position:fixed;right:16px;bottom:82px;z-index:19;width:58px;height:58px;border-radius:50%;border:0;background:var(--brand2);color:#fff;font-size:30px;box-shadow:0 8px 20px rgba(46,125,50,.45)}
+@media(min-width:900px){.fab{right:calc(50% - 424px)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;background:var(--c);left:var(--x);animation:fall var(--t) linear forwards;transform:rotate(var(--r))}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>EDU-LAB <small>Estudia · crece junto a tu mascota</small></h1>
+  <button class="ib" data-act="bell" aria-label="Avisos">🔔<span class="dot" id="bellDot" hidden>0</span></button>
+  <button class="ib" data-act="settings" aria-label="Ajustes">⚙️</button>
+</header>
+<main id="view"></main>
+<button class="fab" data-act="new-item" aria-label="Añadir tarea o lectura">＋</button>
+<nav id="tabs" aria-label="Secciones"><div class="in">
+  <button data-act="tab" data-tab="home"><span>🏠</span>Inicio</button>
+  <button data-act="tab" data-tab="agenda"><span>📅</span>Agenda</button>
+  <button data-act="tab" data-tab="horario"><span>🕒</span>Horario</button>
+  <button data-act="tab" data-tab="plan"><span>📋</span>Planeación</button>
+  <button data-act="tab" data-tab="foco"><span>🍅</span>Foco</button>
+  <button data-act="tab" data-tab="tienda"><span>🛍️</span>Tienda</button>
+  <button data-act="tab" data-tab="asistente"><span>✧</span>Asistente</button>
+</div></nav>
+<div id="toasts" aria-live="polite"></div>
+<dialog id="dlg"></dialog>
+
+<script>
+'use strict';
+/* ============================================================
+   EDU-LAB × Pomodoro — una sola página, sin dependencias.
+   Datos: localStorage (estado) + IndexedDB (evidencias).
+   ============================================================ */
+
+// ---------- utilidades ----------
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseYmd = (s, t) => { const [y, m, d] = s.split('-').map(Number); const [hh, mm] = (t || '00:00').split(':').map(Number); return new Date(y, m - 1, d, hh || 0, mm || 0); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const today = () => ymd(new Date());
+const diffDays = (a, b) => Math.round((parseYmd(b) - parseYmd(a)) / 864e5);
+const DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+const DAYS_LONG = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const dayIdx = d => (d.getDay() + 6) % 7;
+const fmtDate = s => { const d = parseYmd(s); return `${DAYS[dayIdx(d)]} ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`; };
+const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+const fmtDT = d => `${DAYS[dayIdx(d)]} ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}, ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const reduceMotion = () => matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// ---------- reglas del juego ----------
+const DIFF = {
+  facil:   { label: 'Fácil',   pct: 5,  color: '#16a34a' },
+  media:   { label: 'Media',   pct: 10, color: '#d97706' },
+  dificil: { label: 'Difícil', pct: 15, color: '#dc2626' },
+};
+const PROJ_PCT = 30, PROJ_COLOR = '#7c3aed';
+const KINDS = { tarea: { icon: '📝', label: 'Tarea' }, lectura: { icon: '📖', label: 'Lectura' }, proyecto: { icon: '🚀', label: 'Proyecto' }, practica: { icon: '🧪', label: 'Práctica' } };
+const isProj = it => it.kind === 'proyecto' || it.kind === 'practica';
+const pctOf = it => isProj(it) ? PROJ_PCT : DIFF[it.difficulty].pct;      // % de nivel = PAPOIS
+const colorOf = it => isProj(it) ? PROJ_COLOR : DIFF[it.difficulty].color;
+const SUBJECT_COLORS = ['#2563eb', '#db2777', '#059669', '#d97706', '#7c3aed', '#0891b2', '#dc2626', '#4d7c0f'];
+const STAGES = ['', 'Cría', 'Peque', 'Joven', 'Adulto', 'Leyenda'];
+const STAGE_FROM_LEVEL = [0, 1, 2, 3, 4, 7];
+const levelOf = xp => Math.floor(xp / 100) + 1;
+const stageOf = lvl => lvl >= 7 ? 5 : lvl >= 4 ? 4 : lvl;
+const REMIND_PROJECT_DAYS = 4;
+
+// ---------- tienda ----------
+const SHOP = [
+  { id: 'head_flor', slot: 'head', name: 'Moño de flor', price: 20 },
+  { id: 'head_birrete', slot: 'head', name: 'Birrete', price: 40 },
+  { id: 'head_mago', slot: 'head', name: 'Sombrero de mago', price: 70 },
+  { id: 'head_corona', slot: 'head', name: 'Corona', price: 120 },
+  { id: 'head_gorra', slot: 'head', name: 'Gorra aventurera', price: 35 },
+  { id: 'head_cowboy', slot: 'head', name: 'Sombrero vaquero', price: 65 },
+  { id: 'head_halo', slot: 'head', name: 'Aureola brillante', price: 100 },
+  { id: 'face_lentes', slot: 'face', name: 'Lentes redondos', price: 25 },
+  { id: 'face_sol', slot: 'face', name: 'Gafas de sol', price: 35 },
+  { id: 'face_bigote', slot: 'face', name: 'Bigote', price: 20 },
+  { id: 'face_monocle', slot: 'face', name: 'Monóculo elegante', price: 55 },
+  { id: 'face_blush', slot: 'face', name: 'Mejillas brillantes', price: 30 },
+  { id: 'neck_bufanda', slot: 'neck', name: 'Bufanda', price: 30 },
+  { id: 'neck_corbatin', slot: 'neck', name: 'Corbatín', price: 25 },
+  { id: 'neck_medalla', slot: 'neck', name: 'Medalla', price: 50 },
+  { id: 'neck_collar', slot: 'neck', name: 'Collar con dije', price: 45 },
+  { id: 'neck_flor', slot: 'neck', name: 'Collar de flores', price: 55 },
+  { id: 'outfit_capa', slot: 'outfit', name: 'Capa de héroe', price: 80 },
+  { id: 'outfit_delantal', slot: 'outfit', name: 'Delantal de artista', price: 65 },
+  { id: 'outfit_espacio', slot: 'outfit', name: 'Traje espacial', price: 130 },
+  { id: 'aura_chispa', slot: 'aura', name: 'Aura chispeante', price: 70 },
+  { id: 'aura_corazones', slot: 'aura', name: 'Aura de corazones', price: 85 },
+  { id: 'aura_estrella', slot: 'aura', name: 'Aura estelar', price: 120 },
+  { id: 'pet_fox', slot: 'species', name: 'Zorro', price: 0 },
+  { id: 'pet_cat', slot: 'species', name: 'Gato', price: 45 },
+  { id: 'pet_bunny', slot: 'species', name: 'Conejo', price: 60 },
+  { id: 'pet_dog', slot: 'species', name: 'Perrito', price: 75 },
+  { id: 'pet_panda', slot: 'species', name: 'Panda', price: 90 },
+  { id: 'bg_dia', slot: 'bg', name: 'Día soleado', price: 0 },
+  { id: 'bg_atardecer', slot: 'bg', name: 'Atardecer', price: 30 },
+  { id: 'bg_aula', slot: 'bg', name: 'Aula', price: 40 },
+  { id: 'bg_noche', slot: 'bg', name: 'Noche estrellada', price: 60 },
+  { id: 'bg_bosque', slot: 'bg', name: 'Bosque mágico', price: 55 },
+  { id: 'bg_mar', slot: 'bg', name: 'Playa tranquila', price: 55 },
+  { id: 'bg_espacio', slot: 'bg', name: 'Galaxia', price: 90 },
+];
+const SLOTS = { species: '🐾 Mascota', head: '🎩 Cabeza', face: '👓 Cara', neck: '🧣 Cuello', outfit: '🦸 Atuendo', aura: '✨ Efectos', bg: '🌄 Fondo' };
+const DEFAULT_SLOT = { species: 'pet_fox', bg: 'bg_dia' };
+
+// ---------- estado ----------
+const KEY = 'edulab_pomodoro_v1';
+const POMO_DUR = { foco: 25 * 60, corto: 5 * 60, largo: 15 * 60 };
+const defaults = () => ({
+  v: 1,
+  mascot: { name: 'Papoi', xp: 0, activeDays: [], owned: ['pet_fox', 'bg_dia'], equipped: { species: 'pet_fox', bg: 'bg_dia' } },
+  papois: 0, subjects: [], items: [], notified: {}, notifications: [], history: [],
+  pomo: { mode: 'foco', running: false, endAt: null, remaining: POMO_DUR.foco, taskId: null, counts: {}, cycle: 0 },
+});
+function sanitize(raw) {
+  const d = defaults();
+  if (!raw || typeof raw !== 'object') return d;
+  const s = { ...d, ...raw };
+  s.mascot = { ...d.mascot, ...(raw.mascot || {}) };
+  s.mascot.equipped = { ...d.mascot.equipped, ...(raw.mascot?.equipped || {}) };
+  s.mascot.owned = Array.isArray(s.mascot.owned) ? [...new Set([...s.mascot.owned, 'pet_fox', 'bg_dia'])] : d.mascot.owned;
+  s.mascot.activeDays = Array.isArray(s.mascot.activeDays) ? [...new Set(s.mascot.activeDays.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(x)))].sort() : [];
+  s.mascot.xp = Math.max(0, Number(s.mascot.xp) || 0);
+  s.papois = Math.max(0, Number(s.papois) || 0);
+  for (const k of ['subjects', 'items', 'notifications', 'history']) if (!Array.isArray(s[k])) s[k] = [];
+  s.items = s.items.filter(it => it && it.id && it.title && KINDS[it.kind]).map(it => ({ ...it, difficulty: DIFF[it.difficulty] ? it.difficulty : 'media' }));
+  s.subjects.forEach(x => { if (!Array.isArray(x.slots)) x.slots = []; });
+  s.notified = s.notified && typeof s.notified === 'object' ? s.notified : {};
+  s.pomo = { ...d.pomo, ...(raw.pomo || {}) };
+  s.pomo.counts = s.pomo.counts && typeof s.pomo.counts === 'object' ? s.pomo.counts : {};
+  return s;
+}
+let memoryOnly = false;
+function load() {
+  try {
+    const txt = localStorage.getItem(KEY);
+    if (!txt) return defaults();
+    try { return sanitize(JSON.parse(txt)); }
+    catch { localStorage.setItem(KEY + '_corrupto', txt); return defaults(); }
+  } catch { memoryOnly = true; return defaults(); }
+}
+let S = load();
+function save() { if (memoryOnly) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch { if (!memoryOnly) { memoryOnly = true; toast('No se pudo guardar en este navegador'); } } }
+
+// ---------- evidencias (IndexedDB) ----------
+let dbp;
+const idb = () => dbp ??= new Promise((res, rej) => {
+  try {
+    const r = indexedDB.open('edulab-evidence', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('files', { keyPath: 'id' });
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  } catch (e) { rej(e); }
+});
+const fileOp = async (mode, fn) => { const db = await idb(); return new Promise((res, rej) => { const tx = db.transaction('files', mode); const rq = fn(tx.objectStore('files')); tx.oncomplete = () => res(rq?.result); tx.onerror = tx.onabort = () => rej(tx.error); }); };
+const putFile = rec => fileOp('readwrite', s => s.put(rec));
+const getFile = id => fileOp('readonly', s => s.get(id));
+const delFile = id => fileOp('readwrite', s => s.delete(id)).catch(() => {});
+
+// ---------- fechas límite y avisos ----------
+const dueMoment = it => parseYmd(it.due, it.dueTime || '23:59');
+const isOverdue = it => !it.done && it.due && dueMoment(it) < new Date();
+const cmpDue = (a, b) => ((a.due || '9999') + (a.dueTime || '23:59')).localeCompare((b.due || '9999') + (b.dueTime || '23:59'));
+
+/* Cuándo avisar:
+   - Proyecto/práctica: 4 días antes de la entrega (09:00).
+   - Tarea "de un día para otro": el día anterior a la entrega, a las 17:00 (antes de las 6 pm).
+   - Tarea con día elegido: N horas o N días antes (por defecto 1 día, 09:00 si es en días). */
+function reminderAt(it) {
+  if (it.done || !it.due) return null;
+  if (isProj(it)) { const d = parseYmd(it.due, '09:00'); d.setDate(d.getDate() - REMIND_PROJECT_DAYS); return d; }
+  let r;
+  if (it.mode === 'manana') { r = parseYmd(it.due, '17:00'); r.setDate(r.getDate() - 1); }
+  else if (it.leadUnit === 'h') r = new Date(dueMoment(it).getTime() - Math.max(1, it.leadN || 1) * 3600e3);
+  else { r = parseYmd(it.due, '09:00'); r.setDate(r.getDate() - Math.max(1, it.leadN ?? 1)); }
+  if (it.createdAt && r.getTime() < it.createdAt) {          // creada ya dentro de la ventana de aviso
+    const fb = parseYmd(it.due, '07:00');
+    return fb.getTime() > it.createdAt ? fb : null;
+  }
+  return r;
+}
+function whenText(it) {
+  const d = diffDays(today(), it.due);
+  if (d < 0) return `venció hace ${-d} día${-d > 1 ? 's' : ''}`;
+  if (d === 0) return it.dueTime ? `vence hoy a las ${it.dueTime}` : 'vence hoy';
+  if (d === 1) return it.dueTime ? `vence mañana a las ${it.dueTime}` : 'vence mañana';
+  return `vence en ${d} días (${fmtDate(it.due)})`;
+}
+function checkReminders() {
+  const now = Date.now(); let changed = false;
+  for (const it of S.items) {
+    const r = reminderAt(it); if (!r) continue;
+    const key = `${it.id}:${r.getTime()}`;
+    if (r.getTime() > now || S.notified[key] || dueMoment(it).getTime() < now) continue;
+    S.notified[key] = 1; changed = true;
+    const title = isProj(it) ? `${KINDS[it.kind].icon} Entrega próxima: ${it.title}` : `${KINDS[it.kind].icon} Recordatorio: ${it.title}`;
+    const body = isProj(it) ? `Faltan ${Math.max(0, diffDays(today(), it.due))} día(s) para entregar (${fmtDate(it.due)}).` : `Esta tarea ${whenText(it)}.`;
+    pushNotice(title, body);
+  }
+  if (changed) save();
+}
+function pushNotice(title, body) {
+  S.notifications.unshift({ id: uid(), t: Date.now(), title, body, read: false });
+  S.notifications = S.notifications.slice(0, 60);
+  save(); toast(`${title} — ${body}`); updateBell();
+  try { if ('Notification' in window && Notification.permission === 'granted') new Notification(title, { body, tag: title }); } catch { /* en algunos móviles solo funciona con service worker */ }
+  if (ui.tab === 'home' || ui.tab === 'agenda') render();
+}
+function updateBell() {
+  const n = S.notifications.filter(x => !x.read).length;
+  const b = $('#bellDot'); b.hidden = !n; b.textContent = n;
+  syncTitle();
+}
+function syncTitle() {
+  const n = S.notifications.filter(x => !x.read).length;
+  const p = S.pomo; const left = pomoLeft();
+  const t = p.running ? `🍅 ${pad(Math.floor(left / 60))}:${pad(left % 60)} · ` : '';
+  document.title = `${t}${n ? `(${n}) ` : ''}EDU-LAB`;
+}
+
+// ---------- mascota (SVG) ----------
+let svgN = 0;
+const PETS = {
+  pet_fox: { name: 'Zorro', fur: '#f08a32', dark: '#bf5428', light: '#fff0d6', nose: '#382b29', ears: 'pointed', tail: 'fox' },
+  pet_cat: { name: 'Gato', fur: '#8795a8', dark: '#596779', light: '#f4f3ef', nose: '#df8295', ears: 'pointed', tail: 'cat' },
+  pet_bunny: { name: 'Conejo', fur: '#e8d8c8', dark: '#c4a994', light: '#fff8ef', nose: '#e88e9c', ears: 'long', tail: 'round' },
+  pet_dog: { name: 'Perrito', fur: '#c88a56', dark: '#8b5735', light: '#fff0d9', nose: '#382b29', ears: 'floppy', tail: 'wag' },
+  pet_panda: { name: 'Panda', fur: '#f7f5ef', dark: '#30353b', light: '#fff', nose: '#25262a', ears: 'round', tail: 'round' },
+};
+const petEars = pet => {
+  if (pet.ears === 'long') return `<path d="M68 104Q48 42 70 35Q91 37 91 103Z" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3"/><path d="M70 87Q59 49 70 47Q80 49 82 88Z" fill="#efa3ad"/><path d="M109 103Q110 37 131 35Q152 42 132 105Z" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3"/><path d="M119 88Q120 49 131 47Q142 49 130 87Z" fill="#efa3ad"/>`;
+  if (pet.ears === 'floppy') return `<path d="M63 93Q34 73 42 112Q47 140 70 131Z" fill="${pet.dark}" stroke="${pet.dark}" stroke-width="3"/><path d="M137 93Q166 73 158 112Q153 140 130 131Z" fill="${pet.dark}" stroke="${pet.dark}" stroke-width="3"/>`;
+  if (pet.ears === 'round') return `<circle cx="62" cy="91" r="19" fill="${pet.dark}"/><circle cx="138" cy="91" r="19" fill="${pet.dark}"/>`;
+  return `<path d="M57 112L62 50Q64 42 72 49L96 101Z" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3" stroke-linejoin="round"/><path d="M68 91L70 61L84 92Z" fill="${pet.ears === 'pointed' && pet.name === 'Zorro' ? '#ffd0a1' : '#e8a4ab'}"/><path d="M104 101L128 49Q136 42 138 50L143 112Z" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3" stroke-linejoin="round"/><path d="M116 92L130 61L132 91Z" fill="${pet.ears === 'pointed' && pet.name === 'Zorro' ? '#ffd0a1' : '#e8a4ab'}"/>`;
+};
+const petTail = pet => {
+  if (pet.tail === 'fox') return `<path d="M128 165Q174 160 166 120Q160 103 146 109Q157 132 132 140Z" fill="${pet.dark}" stroke="${pet.dark}" stroke-width="3"/><path d="M164 121Q164 138 148 140Q161 133 156 119Z" fill="${pet.light}"/>`;
+  if (pet.tail === 'cat') return `<path d="M127 173Q168 176 163 144Q161 132 150 133Q158 151 130 151Z" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="4" stroke-linecap="round"/>`;
+  if (pet.tail === 'wag') return `<path d="M126 174Q166 183 164 151" fill="none" stroke="${pet.dark}" stroke-width="12" stroke-linecap="round"/>`;
+  return `<circle cx="135" cy="173" r="12" fill="${pet.light}" stroke="${pet.dark}" stroke-width="2"/>`;
+};
+function animalSVG(id, stage, eq, label) {
+  const pet = PETS[id] || PETS.pet_fox;
+  const scale = 0.72 + Math.min(0.38, S.history.length * 0.035) + (stage - 1) * 0.025;
+  const top = 72 - stage * 2;
+  const hat = eq.head && ACC[eq.head] ? `<g transform="translate(100 ${top})">${ACC[eq.head]()}</g>` : '';
+  const sparkle = stage >= 4 ? '<path d="M47 57l3 7 7 3-7 3-3 7-3-7-7-3 7-3zM155 83l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff5a8"/>' : '';
+  const aura = eq.aura && ACC[eq.aura] ? ACC[eq.aura]() : '';
+  const outfit = eq.outfit && ACC[eq.outfit] ? ACC[eq.outfit]() : '';
+  const face = pet.name === 'Panda' ? '<ellipse cx="80" cy="125" rx="14" ry="18" fill="#30353b"/><ellipse cx="120" cy="125" rx="14" ry="18" fill="#30353b"/>' : '';
+  return `<svg viewBox="0 -20 200 240" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">
+${bgSVG(eq.bg || DEFAULT_SLOT.bg, ++svgN)}<ellipse cx="100" cy="212" rx="48" ry="5" fill="rgba(0,0,0,.18)"/>
+<g class="pet-art" style="transform:scale(${scale.toFixed(3)})">
+${aura}${sparkle}${petTail(pet)}${petEars(pet)}
+<ellipse cx="100" cy="177" rx="34" ry="31" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3"/><ellipse cx="100" cy="184" rx="19" ry="21" fill="${pet.light}"/>${outfit}
+<ellipse cx="77" cy="198" rx="13" ry="7" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="2"/><ellipse cx="123" cy="198" rx="13" ry="7" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="2"/>
+<circle cx="100" cy="124" r="48" fill="${pet.fur}" stroke="${pet.dark}" stroke-width="3"/>${face}
+<ellipse cx="100" cy="143" rx="25" ry="18" fill="${pet.light}"/><ellipse cx="82" cy="128" rx="4" ry="5" fill="#222"/><ellipse cx="118" cy="128" rx="4" ry="5" fill="#222"/>
+<circle cx="83" cy="127" r="1.4" fill="#fff"/><circle cx="119" cy="127" r="1.4" fill="#fff"/><ellipse cx="72" cy="145" rx="7" ry="4" fill="#ff9eaa" opacity=".65"/><ellipse cx="128" cy="145" rx="7" ry="4" fill="#ff9eaa" opacity=".65"/>
+<path d="M95 140Q100 135 105 140Q105 147 100 147Q95 147 95 140Z" fill="${pet.nose}"/><path d="M100 147V151M100 151Q95 157 91 152M100 151Q105 157 109 152" fill="none" stroke="#483735" stroke-width="2" stroke-linecap="round"/>
+${eq.neck && ACC[eq.neck] ? ACC[eq.neck]() : ''}${eq.face && ACC[eq.face] ? ACC[eq.face]() : ''}${hat}</g></svg>`;
+}
+function bgSVG(id, n) {
+  const stars = [[20, 30], [50, 6], [80, 40], [120, 14], [150, 48], [178, 24], [30, 90], [170, 100], [64, 70], [140, 80]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.4" fill="#fff"/>`).join('');
+  const base = (a, b) => `<defs><linearGradient id="bg${n}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect x="0" y="-20" width="200" height="240" fill="url(#bg${n})"/>`;
+  if (id === 'bg_atardecer') return base('#ff8f8f', '#ffe3a8') + '<circle cx="46" cy="150" r="26" fill="#fff1c1" opacity=".9"/><rect y="207" width="200" height="13" fill="#b35f6a"/>';
+  if (id === 'bg_noche') return base('#12173f', '#3b2f73') + stars + '<circle cx="164" cy="8" r="13" fill="#fdf6c8"/><circle cx="170" cy="4" r="11" fill="#1c2150"/><rect y="207" width="200" height="13" fill="#2a2557"/>';
+  if (id === 'bg_aula') return base('#f8efd2', '#f1e2b5') + '<rect x="22" y="-6" width="156" height="72" rx="5" fill="#2f5d50" stroke="#8a5a2b" stroke-width="5"/><text x="100" y="36" text-anchor="middle" fill="#e8f5ee" font-size="17" font-family="Comic Sans MS,cursive,sans-serif">¡A estudiar!</text><path d="M34 54H70" stroke="#e8f5ee" stroke-width="2" opacity=".6"/><rect y="207" width="200" height="13" fill="#c9a66b"/>';
+  if (id === 'bg_bosque') return base('#a7e8d4', '#78bb7b') + '<circle cx="24" cy="106" r="44" fill="#3c8c68" opacity=".65"/><circle cx="176" cy="98" r="48" fill="#4a9d65" opacity=".65"/><circle cx="164" cy="24" r="12" fill="#fff1a8"/><rect y="207" width="200" height="13" fill="#578f56"/>';
+  if (id === 'bg_mar') return base('#83d9f3', '#f8e9ba') + '<circle cx="160" cy="28" r="18" fill="#ffe27a"/><path d="M0 148Q35 134 70 148T140 148T210 148V220H0Z" fill="#54b8d5"/><path d="M0 172Q35 158 70 172T140 172T210 172" fill="none" stroke="#dcf8ff" stroke-width="5" opacity=".8"/><rect y="207" width="200" height="13" fill="#e7c77f"/>';
+  if (id === 'bg_espacio') return base('#161b4c', '#443274') + stars + '<circle cx="164" cy="30" r="18" fill="#ffe7a3" opacity=".9"/><circle cx="40" cy="82" r="15" fill="#f3a5dc" opacity=".45"/><circle cx="40" cy="82" r="7" fill="#f3a5dc"/><rect y="207" width="200" height="13" fill="#302653"/>';
+  return base('#bfe8ff', '#eaf9e4') + '<circle cx="164" cy="8" r="14" fill="#ffe27a"/><circle cx="164" cy="8" r="19" fill="#ffe27a" opacity=".3"/><rect y="207" width="200" height="13" fill="#8cc56f"/>';
+}
+const ACC = {
+  head_flor: () => `<g transform="translate(16 -4)">${[0, 72, 144, 216, 288].map(a => `<circle cx="${(Math.cos(a * Math.PI / 180) * 6).toFixed(1)}" cy="${(Math.sin(a * Math.PI / 180) * 6).toFixed(1)}" r="4.6" fill="#ff7eb6"/>`).join('')}<circle r="3.6" fill="#ffd54a"/></g>`,
+  head_birrete: () => '<path d="M-17 -4V8Q0 16 17 8V-4Z" fill="#111827"/><path d="M-32 -8L0 -22L32 -8L0 6Z" fill="#1f2937" stroke="#0b1220" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 -8V8" stroke="#facc15" stroke-width="2"/><circle cx="24" cy="10" r="3.2" fill="#facc15"/>',
+  head_mago: () => '<ellipse cx="0" cy="2" rx="32" ry="7" fill="#4c2fb8"/><path d="M-22 2L2 -50Q4 -54 7 -48L24 2Z" fill="#6d4aff"/><rect x="-22" y="-8" width="46" height="7" fill="#facc15"/><circle cx="-6" cy="-24" r="2.6" fill="#facc15"/><circle cx="8" cy="-16" r="2" fill="#fff"/>',
+  head_corona: () => '<path d="M-24 4V-14L-12 -4L0 -20L12 -4L24 -14V4Z" fill="#facc15" stroke="#b7791f" stroke-width="2" stroke-linejoin="round"/><circle cx="0" cy="-6" r="3" fill="#ef4444"/><circle cx="-14" cy="-1" r="2" fill="#3b82f6"/><circle cx="14" cy="-1" r="2" fill="#22c55e"/>',
+  head_gorra: () => '<path d="M-24 0Q-22 -22 0 -23Q23 -22 25 0Z" fill="#4f79df" stroke="#344a9b" stroke-width="2"/><path d="M-24 -2Q1 -10 32 -1Q20 11 -18 7Z" fill="#3657b6" stroke="#344a9b" stroke-width="2"/>',
+  head_cowboy: () => '<ellipse cx="0" cy="0" rx="34" ry="7" fill="#b87942" stroke="#744625" stroke-width="2"/><path d="M-22 0Q-21 -23 -9 -27L0 -33L9 -27Q21 -23 22 0Z" fill="#d39a5d" stroke="#744625" stroke-width="2"/><path d="M-18 -9H18" stroke="#f3d37b" stroke-width="5"/>',
+  head_halo: () => '<ellipse cx="0" cy="-17" rx="25" ry="7" fill="none" stroke="#ffe46b" stroke-width="5"/><ellipse cx="0" cy="-17" rx="31" ry="11" fill="none" stroke="#fff4b1" stroke-width="2" opacity=".8"/>',
+  face_lentes: () => '<g fill="rgba(255,255,255,.28)" stroke="#1f2937" stroke-width="2.6"><circle cx="82" cy="128" r="11"/><circle cx="118" cy="128" r="11"/></g><path d="M93 128H107M71 127L64 124M129 127L136 124" stroke="#1f2937" stroke-width="2.6" stroke-linecap="round"/>',
+  face_sol: () => '<g fill="#111827"><rect x="70" y="121" width="27" height="15" rx="6"/><rect x="103" y="121" width="27" height="15" rx="6"/></g><path d="M97 126H103M70 124L63 121M130 124L137 121" stroke="#111827" stroke-width="2.6" stroke-linecap="round"/><path d="M77 124L85 124M110 124L118 124" stroke="#fff" stroke-width="1.6" opacity=".6" stroke-linecap="round"/>',
+  face_bigote: () => '<path d="M86 150Q93 143 100 149Q107 143 114 150Q107 155 100 152Q93 155 86 150Z" fill="#3b2a1d"/>',
+  face_monocle: () => '<circle cx="119" cy="128" r="14" fill="rgba(255,255,255,.25)" stroke="#d4a638" stroke-width="3"/><path d="M130 139L139 151" stroke="#d4a638" stroke-width="2.5" stroke-linecap="round"/>',
+  face_blush: () => '<path d="M65 145q6-7 12 0M123 145q6-7 12 0" fill="none" stroke="#ff7592" stroke-width="4" stroke-linecap="round"/>',
+  neck_bufanda: () => '<rect x="60" y="147" width="80" height="13" rx="6.5" fill="#ef4444"/><rect x="118" y="154" width="15" height="36" rx="5" fill="#dc2626"/><path d="M118 166H133M118 176H133" stroke="#fff" stroke-width="2.5" opacity=".7"/>',
+  neck_corbatin: () => '<g transform="translate(100 158)"><path d="M-17 -8L-2 0L-17 8Z" fill="#7c3aed"/><path d="M17 -8L2 0L17 8Z" fill="#7c3aed"/><circle r="4.2" fill="#5b21b6"/></g>',
+  neck_medalla: () => '<path d="M116 150L126 150L124 170L120 170Z" fill="#3b82f6"/><circle cx="123" cy="178" r="9" fill="#facc15" stroke="#b7791f" stroke-width="2"/><text x="123" y="182" text-anchor="middle" font-size="11" fill="#b7791f">★</text>',
+  neck_collar: () => '<path d="M75 151Q100 163 125 151L120 161Q100 171 80 161Z" fill="#72c4e7" stroke="#3986aa" stroke-width="2"/><circle cx="100" cy="164" r="6" fill="#f7cf55" stroke="#b38a24" stroke-width="2"/>',
+  neck_flor: () => '<path d="M76 151Q100 164 124 151" fill="none" stroke="#78a94d" stroke-width="5"/><circle cx="80" cy="154" r="5" fill="#ff83a8"/><circle cx="91" cy="159" r="5" fill="#ffd45c"/><circle cx="100" cy="160" r="5" fill="#fff"/><circle cx="110" cy="158" r="5" fill="#a88bf1"/><circle cx="120" cy="154" r="5" fill="#ff83a8"/>',
+  outfit_capa: () => '<path d="M72 154L100 167L128 154L140 196Q100 205 60 196Z" fill="#9c65e8" stroke="#6942b0" stroke-width="3" opacity=".94"/><path d="M86 166L100 178L114 166L109 188H91Z" fill="#f5d35f"/>',
+  outfit_delantal: () => '<path d="M82 160L100 168L118 160L124 196H76Z" fill="#f4a261" stroke="#c66d3d" stroke-width="2"/><path d="M87 169V159M113 169V159M88 181H112" stroke="#fff0d6" stroke-width="3"/>',
+  outfit_espacio: () => '<path d="M73 160Q100 169 127 160L124 195Q100 202 76 195Z" fill="#dce8f4" stroke="#7186a1" stroke-width="3"/><circle cx="100" cy="177" r="10" fill="#76c8d8" stroke="#526982" stroke-width="2"/><path d="M82 163L88 171M118 163L112 171" stroke="#ef9b53" stroke-width="4"/>',
+  aura_chispa: () => '<g fill="#fff3a6"><path d="M48 91l4 9 9 4-9 4-4 9-4-9-9-4 9-4zM151 115l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g>',
+  aura_corazones: () => '<g fill="#ff7ea9"><path d="M48 96C39 88 27 99 48 116C69 99 57 88 48 96Z"/><path d="M154 76C147 69 137 78 154 92C171 78 161 69 154 76Z"/></g>',
+  aura_estrella: () => '<g fill="#ffe36e" stroke="#fff5c2" stroke-width="1"><path d="M47 72l5 13 13 5-13 5-5 13-5-13-13-5 13-5z"/><path d="M154 106l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/></g>',
+};
+function mascotSVG(stage, eq, label = 'Tu mascota') { return animalSVG(eq.species || DEFAULT_SLOT.species, stage, eq, label); }
+const curStage = () => stageOf(levelOf(S.mascot.xp));
+
+// ---------- recompensas ----------
+const rewardChips = () => `<div class="legend">${Object.values(DIFF).map(d => `<span class="chip c" style="--c:${d.color}">${d.label} +${d.pct}%</span>`).join('')}<span class="chip c" style="--c:${PROJ_COLOR}">Proyecto / práctica +${PROJ_PCT}%</span></div>`;
+async function completeItem(id, files) {
+  const it = S.items.find(x => x.id === id); if (!it || it.done) return;
+  const ev = []; let failed = 0;
+  for (const f of files) { try { const eid = uid(); await putFile({ id: eid, name: f.name, type: f.type, blob: f }); ev.push(eid); } catch { failed++; } }
+  const pct = pctOf(it); const lvl0 = levelOf(S.mascot.xp), st0 = stageOf(lvl0);
+  it.done = true; it.doneAt = Date.now(); it.evidence = [...(it.evidence || []), ...ev];
+  if (!S.mascot.activeDays.includes(today())) S.mascot.activeDays.push(today());
+  S.mascot.xp += pct; S.papois += pct;                      // PAPOIS = % de dificultad
+  S.history = [{ t: Date.now(), text: `${KINDS[it.kind].label}: ${it.title}`, pct }, ...S.history].slice(0, 50);
+  save(); closeDlg(); render();
+  const lvl1 = levelOf(S.mascot.xp), st1 = stageOf(lvl1);
+  if (failed) toast('No se pudo guardar alguna evidencia en este navegador');
+  toast(`+${pct}% de nivel · +${pct} 🪙 PAPOIS`, 'big');
+  const m = $('.mascot'); if (m && !reduceMotion()) { m.classList.add('hop'); setTimeout(() => m.classList.remove('hop'), 900); }
+  if (lvl1 > lvl0) levelUp(lvl1, st1 > st0);
+}
+function levelUp(lvl, evolved) {
+  confetti();
+  openDlg(`<div class="dc" style="text-align:center"><h3>🎉 ¡Nivel ${lvl}!</h3>
+    <div style="max-width:200px;margin:8px auto">${mascotSVG(curStage(), S.mascot.equipped)}</div>
+    <p>${evolved ? `¡<b>${esc(S.mascot.name)}</b> evolucionó a <b>${STAGES[curStage()]}</b>!` : `<b>${esc(S.mascot.name)}</b> sigue creciendo.`}</p>
+    <div class="acts" style="justify-content:center"><button class="btn pri" data-act="close">¡Genial!</button></div></div>`);
+}
+function confetti() {
+  if (reduceMotion()) return;
+  const c = document.createElement('div'); c.className = 'confetti';
+  const cols = ['#43a047', '#fbc02d', '#e91e63', '#2196f3', '#9c27b0'];
+  c.innerHTML = Array.from({ length: 60 }, () => `<i style="--c:${cols[Math.random() * 5 | 0]};--x:${Math.random() * 100}%;--t:${(2 + Math.random() * 2).toFixed(2)}s;--r:${Math.random() * 360 | 0}deg"></i>`).join('');
+  document.body.appendChild(c); setTimeout(() => c.remove(), 4500);
+}
+
+// ---------- UI base ----------
+const ui = { tab: 'home', agendaMode: 'cal', month: { y: new Date().getFullYear(), m: new Date().getMonth() }, sel: today(), listFilter: 'pend', planFilter: 'pend', shopSlot: 'head' };
+const dlg = $('#dlg');
+function openDlg(html, onMount) { if (dlg._off) dlg._off(); dlg._off = null; dlg.innerHTML = html; if (!dlg.open) dlg.showModal(); if (onMount) dlg._off = onMount(dlg) || null; }
+function closeDlg() { if (dlg.open) dlg.close(); }
+dlg.addEventListener('close', () => { if (dlg.open) return; /* ya se abrió otro diálogo: no borrarlo */ if (dlg._off) dlg._off(); dlg._off = null; dlg.innerHTML = ''; });
+dlg.addEventListener('mousedown', e => { if (e.target === dlg) dlg._bd = true; });
+dlg.addEventListener('click', e => { if (e.target === dlg && dlg._bd) closeDlg(); dlg._bd = false; });
+function toast(msg, cls = '') { const t = document.createElement('div'); t.className = 'toast ' + cls; t.textContent = msg; $('#toasts').appendChild(t); setTimeout(() => t.remove(), cls === 'big' ? 4200 : 5200); }
+function download(text, name, type) { const u = URL.createObjectURL(new Blob([text], { type })); const a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 10000); }
+const subjOf = it => S.subjects.find(s => s.id === it.subjectId);
+
+// ---------- componentes ----------
+function dueLabel(it) {
+  if (!it.due) return '<span>Sin fecha</span>';
+  const d = diffDays(today(), it.due); const late = isOverdue(it);
+  const base = late ? `Vencida hace ${Math.max(1, -d)} d` : d === 0 ? 'Hoy' : d === 1 ? 'Mañana' : fmtDate(it.due);
+  return `<span class="${late ? 'late' : ''}">${late && d === 0 ? 'Venció hoy' : base}${it.dueTime ? ' · ' + esc(it.dueTime) : ''}</span>`;
+}
+function itemCard(it) {
+  const s = subjOf(it);
+  return `<div class="item ${it.done ? 'done' : ''}" style="--c:${colorOf(it)}" data-act="open-item" data-id="${it.id}" role="button" tabindex="0">
+    <button class="chk ${it.done ? 'on' : ''}" ${it.done ? 'disabled aria-label="Hecha"' : `data-act="verify" data-id="${it.id}" aria-label="Marcar como hecha"`}>${it.done ? '✓' : ''}</button>
+    <div class="grow"><div class="t">${KINDS[it.kind].icon} ${esc(it.title)}</div>
+      <div class="m">${dueLabel(it)}${s ? `<span class="subj" style="--c:${s.color}">${esc(s.name)}</span>` : ''}<span class="chip c" style="--c:${colorOf(it)}">${isProj(it) ? KINDS[it.kind].label + ' · ' : DIFF[it.difficulty].label + ' · '}+${pctOf(it)}%</span>${it.locked ? '<span title="Fecha fijada por la rúbrica">🔒</span>' : ''}</div></div></div>`;
+}
+const classesOn = date => S.subjects.flatMap(s => s.slots.filter(sl => sl.day === dayIdx(parseYmd(date))).map(sl => ({ s, sl }))).sort((a, b) => a.sl.start.localeCompare(b.sl.start));
+const classRow = ({ s, sl }) => `<div class="item" style="--c:${s.color};cursor:default"><div class="grow"><div class="t">🕒 ${esc(s.name)}</div><div class="m"><span>${esc(sl.start)}–${esc(sl.end)}</span>${sl.room ? `<span>📍 ${esc(sl.room)}</span>` : ''}${s.teacher ? `<span>👤 ${esc(s.teacher)}</span>` : ''}</div></div></div>`;
+function activeStreak() {
+  const days = new Set(S.mascot.activeDays);
+  let date = days.has(today()) ? today() : ymd(addDays(parseYmd(today()), -1));
+  let count = 0;
+  while (days.has(date)) { count++; date = ymd(addDays(parseYmd(date), -1)); }
+  return count;
+}
+
+// ---------- vistas ----------
+function viewHome() {
+  const m = S.mascot, lvl = levelOf(m.xp), prog = m.xp % 100, st = stageOf(lvl);
+  const next = STAGE_FROM_LEVEL.find(l => l > lvl);
+  const pend = S.items.filter(i => !i.done);
+  const td = today(), in7 = ymd(addDays(new Date(), 7));
+  const late = pend.filter(isOverdue).sort(cmpDue);
+  const hoy = pend.filter(i => i.due === td && !isOverdue(i)).sort(cmpDue);
+  const prox = pend.filter(i => i.due > td && i.due <= in7).sort(cmpDue);
+  const sinFecha = pend.filter(i => !i.due);
+  const cl = classesOn(td), streak = activeStreak();
+  return `<div class="card"><div class="hero">
+    <div>${`<div class="mascot">${mascotSVG(st, m.equipped, 'Mascota ' + m.name)}</div>`}</div>
+    <div>
+      <button class="mname" data-act="rename" title="Cambiar nombre">${esc(m.name)} ✏️</button>
+      <div class="muted">Nivel ${lvl} · ${STAGES[st]}</div>
+      <div class="row" style="margin:10px 0 6px"><div class="bar grow"><i style="width:${prog}%"></i></div><b>${prog}%</b></div>
+      <div class="muted">${next ? `Al llegar al nivel ${next} evoluciona a <b>${STAGES[stageOf(next)]}</b>.` : '¡Máxima evolución alcanzada!'}</div>
+      <div class="row" style="margin-top:12px"><span class="chip" style="font-size:14px">🪙 ${S.papois} PAPOIS</span>
+        <button class="btn sm" data-act="tab" data-tab="tienda">Personalizar</button><button class="btn sm" data-act="tab" data-tab="foco">🍅 Enfocarme</button></div>
+    </div></div></div>
+    <div class="card streak-card"><span class="streak-fire" aria-hidden="true">🔥</span><div class="streak-copy"><b>${streak} ${streak === 1 ? 'día' : 'días'} de racha</b><p>${m.activeDays.includes(td) ? '¡Hoy completaste una tarea! Tu mascota creció contigo.' : streak ? 'Completa una tarea hoy para mantener tu racha.' : 'Completa una tarea para activar tu racha; si no completas tareas, tu mascota no crece.'}</p></div><button class="btn sm" data-act="tab" data-tab="asistente">Estudiar</button></div>
+    <div class="card"><h2>🔔 Avisos de trabajos pendientes</h2><p class="muted">Para recibir alertas aunque EDU-LAB esté cerrada, exporta tus pendientes con fecha e impórtalos en el calendario del dispositivo. Activa las notificaciones de ese calendario. Si cambias tus fechas o agregas trabajos, vuelve a exportar el archivo.</p><button class="btn sm pri" data-act="ics">📆 Exportar trabajos y alertas (.ics)</button></div>
+    <div class="card"><h2>🎯 ¿Cuánto sube tu mascota?</h2>${rewardChips()}<p class="muted" style="margin:10px 0 0">Cada tarea, lectura o proyecto verificado suma ese % de nivel, PAPOIS y un poco de crecimiento. Cada 100% sube un nivel; si no completas actividades, la mascota no crece.</p></div>
+  ${sinFecha.some(isProj) ? `<div class="card" style="border-color:var(--warn)"><b>⚠️ ${sinFecha.filter(isProj).length} proyecto(s) sin fecha.</b> <span class="muted">Ponles fecha en <a href="#" data-act="tab" data-tab="plan">Planeación</a> para recibir avisos.</span></div>` : ''}
+  <div class="card"><h2>🕒 Clases de hoy <span class="sp"></span><span class="muted">${DAYS_LONG[dayIdx(new Date())]}</span></h2>${cl.length ? cl.map(classRow).join('') : `<div class="empty">${S.subjects.length ? 'Hoy no tienes clases.' : 'Aún no registras materias. Añádelas en <a href="#" data-act="tab" data-tab="horario">Horario</a>.'}</div>`}</div>
+  <div class="card"><h2>📌 Pendientes</h2>
+    ${late.length ? `<div class="group" style="color:var(--danger)">Vencidas</div>${late.map(itemCard).join('')}` : ''}
+    ${hoy.length ? `<div class="group">Hoy</div>${hoy.map(itemCard).join('')}` : ''}
+    ${prox.length ? `<div class="group">Próximos 7 días</div>${prox.map(itemCard).join('')}` : ''}
+    ${!late.length && !hoy.length && !prox.length ? '<div class="empty">🎉 Nada urgente. Toca ＋ para añadir una tarea o lectura.</div>' : ''}</div>
+  ${S.history.length ? `<div class="card"><h2>🏅 Últimos logros</h2>${S.history.slice(0, 5).map(h => `<div class="notif">${esc(h.text)} <span class="chip">+${h.pct}%</span></div>`).join('')}</div>` : ''}`;
+}
+
+function viewAgenda() {
+  const seg = `<div class="seg" role="group"><button aria-pressed="${ui.agendaMode === 'cal'}" data-act="agenda-mode" data-m="cal">📅 Calendario</button><button aria-pressed="${ui.agendaMode === 'list'}" data-act="agenda-mode" data-m="list">📃 Lista</button></div>`;
+  return `<div class="row" style="margin-bottom:12px">${seg}<span class="grow"></span><button class="btn sm" data-act="new-item">＋ Añadir</button></div>` + (ui.agendaMode === 'cal' ? calHTML() : listHTML());
+}
+function calHTML() {
+  const { y, m } = ui.month; const first = new Date(y, m, 1); const start = addDays(first, -dayIdx(first));
+  const by = {}; for (const it of S.items) if (it.due) (by[it.due] ||= []).push(it);
+  let cells = DAYS.map(d => `<div class="wd">${d}</div>`).join('');
+  for (let i = 0; i < 42; i++) {
+    const d = addDays(start, i), s = ymd(d), its = by[s] || [];
+    cells += `<button class="d ${d.getMonth() !== m ? 'o' : ''} ${s === today() ? 'today' : ''} ${s === ui.sel ? 'sel' : ''}" data-act="selday" data-date="${s}" aria-label="${esc(fmtDate(s))}, ${its.length} pendientes"><span>${d.getDate()}</span><span class="dots">${its.slice(0, 6).map(it => `<i class="${it.done ? 'dn' : ''}" style="--c:${colorOf(it)}"></i>`).join('')}</span></button>`;
+  }
+  const dayItems = (by[ui.sel] || []).sort(cmpDue), cl = classesOn(ui.sel);
+  return `<div class="card"><div class="row" style="margin-bottom:10px"><button class="btn sm" data-act="month" data-d="-1" aria-label="Mes anterior">‹</button><b class="grow" style="text-align:center;text-transform:capitalize">${MONTHS[m]} ${y}</b><button class="btn sm" data-act="month" data-d="0">Hoy</button><button class="btn sm" data-act="month" data-d="1" aria-label="Mes siguiente">›</button></div><div class="cal">${cells}</div>
+    <div class="row" style="margin-top:10px">${Object.values(DIFF).map(d => `<span class="chip c" style="--c:${d.color}">${d.label}</span>`).join('')}<span class="chip c" style="--c:${PROJ_COLOR}">Proyecto/práctica</span></div></div>
+  <div class="card"><h2>${esc(fmtDate(ui.sel))}<span class="sp"></span><button class="btn sm" data-act="new-item" data-date="${ui.sel}">＋ Para este día</button></h2>
+    ${cl.length ? `<div class="group" style="margin-top:0">Clases</div>${cl.map(classRow).join('')}` : ''}
+    ${dayItems.length ? `<div class="group">Entregas</div>${dayItems.map(itemCard).join('')}` : '<div class="empty">Sin entregas este día.</div>'}</div>`;
+}
+function listHTML() {
+  const f = ui.listFilter;
+  const flt = `<div class="seg" style="margin-bottom:12px">${[['pend', 'Pendientes'], ['done', 'Hechas'], ['all', 'Todas']].map(([k, l]) => `<button aria-pressed="${f === k}" data-act="list-filter" data-f="${k}">${l}</button>`).join('')}</div>`;
+  let its = S.items.filter(i => f === 'all' || (f === 'done' ? i.done : !i.done)).sort(cmpDue);
+  if (f === 'done') its = its.sort((a, b) => (b.doneAt || 0) - (a.doneAt || 0));
+  if (!its.length) return flt + '<div class="card empty">No hay elementos aquí.</div>';
+  const groups = new Map();
+  for (const it of its) { const k = f === 'done' ? 'Completadas' : !it.due ? 'Sin fecha' : isOverdue(it) ? 'Vencidas' : it.due; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(it); }
+  return flt + [...groups].map(([k, v]) => `<div class="group" ${k === 'Vencidas' ? 'style="color:var(--danger)"' : ''}>${/^\d{4}-/.test(k) ? esc(fmtDate(k)) : k}</div>${v.map(itemCard).join('')}`).join('');
+}
+
+function viewHorario() {
+  const slots = S.subjects.flatMap(s => s.slots.map(sl => ({ s, sl })));
+  let grid = '<div class="card empty">Registra tus materias con sus días y horas para ver tu horario semanal.</div>';
+  if (slots.length) {
+    const h0 = Math.floor(Math.min(...slots.map(x => toMin(x.sl.start))) / 60), h1 = Math.min(24, Math.ceil(Math.max(...slots.map(x => toMin(x.sl.end))) / 60));
+    const nd = slots.some(x => x.sl.day === 6) ? 7 : 6; const H = (h1 - h0) * 48;
+    const gutter = `<div><div class="hd">&nbsp;</div>${Array.from({ length: h1 - h0 }, (_, i) => `<div class="hr">${pad(h0 + i)}:00</div>`).join('')}</div>`;
+    const cols = Array.from({ length: nd }, (_, d) => `<div><div class="hd" style="${d === dayIdx(new Date()) ? 'color:var(--brand)' : ''}">${DAYS[d]}</div><div class="col" style="height:${H}px">${slots.filter(x => x.sl.day === d).map(({ s, sl }) => {
+      const top = (toMin(sl.start) - h0 * 60) / 60 * 48, h = Math.max(20, (toMin(sl.end) - toMin(sl.start)) / 60 * 48 - 2);
+      return `<div class="blk" style="--c:${s.color};top:${top}px;height:${h}px">${esc(s.name)}<small>${esc(sl.start)}${sl.room ? ' · ' + esc(sl.room) : ''}</small></div>`;
+    }).join('')}</div></div>`).join('');
+    grid = `<div class="card" style="padding:10px;overflow-x:auto"><div class="tt" style="grid-template-columns:34px repeat(${nd},minmax(48px,1fr))">${gutter}${cols}</div></div>`;
+  }
+  const list = S.subjects.map(s => {
+    const n = S.items.filter(i => i.subjectId === s.id && !i.done).length;
+    return `<div class="item" style="--c:${s.color};cursor:default"><div class="grow"><div class="t">${esc(s.name)}</div><div class="m">${s.teacher ? `<span>👤 ${esc(s.teacher)}</span>` : ''}<span>${s.slots.map(sl => `${DAYS[sl.day]} ${esc(sl.start)}`).join(' · ') || 'Sin horario'}</span><span>${n} pendiente(s)</span></div></div>
+      <button class="btn sm" data-act="edit-subject" data-id="${s.id}">Editar</button></div>`;
+  }).join('');
+  return `<div class="row" style="margin-bottom:12px"><h2 style="margin:0;font-size:18px" class="grow">Mi horario</h2><button class="btn pri" data-act="edit-subject">＋ Materia</button></div>${grid}${S.subjects.length ? `<div class="card"><h2>📚 Materias</h2>${list}</div>` : ''}`;
+}
+
+const EXAMPLE = `# Nombre | Especificaciones | Fecha de entrega | Materia | Tipo
+Proyecto trimestral de Física | Maqueta funcional + informe de 3 páginas + exposición de 5 min | 2026-11-20 | Física | Proyecto
+Práctica de laboratorio 2 | Reporte con gráficas y conclusiones | 15/12/2026 | Química | Práctica
+Ensayo final | Mínimo 4 fuentes, formato APA | | Español | Proyecto`;
+function viewPlan() {
+  const f = ui.planFilter;
+  const all = S.items.filter(isProj).sort(cmpDue);
+  const list = all.filter(i => f === 'all' || (f === 'done' ? i.done : !i.done));
+  return `<div class="card"><h2>📥 Importar rúbrica / planeación</h2>
+    <p class="muted" style="margin-top:0">Pega el texto o sube un archivo <b>.txt, .csv o .json</b>. Cada línea es un proyecto o práctica y se agrega sola con sus especificaciones y fecha de entrega (la fecha queda fija 🔒). Si no trae fecha, la pones tú después.</p>
+    <p class="muted">Formato por línea: <code>Nombre | Especificaciones | Fecha | Materia | Tipo</code></p>
+    <textarea id="rubtxt" placeholder="Pega aquí tu rúbrica o planeación…" style="min-height:110px"></textarea>
+    <div class="row" style="margin-top:8px"><input type="file" id="rubfile" accept=".txt,.csv,.tsv,.json,text/plain,text/csv,application/json" style="max-width:240px"><span class="grow"></span><button class="btn sm" data-act="rub-example">Ver ejemplo</button><button class="btn pri" data-act="rub-import">Agregar</button></div>
+    <p class="muted" style="margin-bottom:0">¿Tu planeación es un PDF? Copia su texto y pégalo aquí, o añade los proyectos a mano abajo.</p></div>
+  <div class="card"><h2>➕ Añadir proyecto o práctica a mano</h2>${planFormHTML()}</div>
+  <div class="row" style="margin-bottom:8px"><h2 class="grow" style="margin:0;font-size:16px">Mis proyectos y prácticas (${all.filter(i => !i.done).length} pendientes)</h2></div>
+  <div class="seg" style="margin-bottom:10px">${[['pend', 'Pendientes'], ['done', 'Hechos'], ['all', 'Todos']].map(([k, l]) => `<button aria-pressed="${f === k}" data-act="plan-filter" data-f="${k}">${l}</button>`).join('')}</div>
+  ${list.length ? list.map(itemCard).join('') : '<div class="card empty">Aún no hay proyectos aquí.</div>'}`;
+}
+const subjOptions = sel => `<option value="">— Sin materia —</option>${S.subjects.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}`;
+function planFormHTML() {
+  return `<form data-form="plan-add"><div class="opt" style="--c:${PROJ_COLOR}"><label><input type="radio" name="kind" value="proyecto" checked>🚀 Proyecto</label><label><input type="radio" name="kind" value="practica">🧪 Práctica</label></div>
+  <label class="f" for="pt">Nombre</label><input type="text" id="pt" name="title" maxlength="120" required>
+  <label class="f" for="ps">Especificaciones (opcional)</label><textarea id="ps" name="specs" maxlength="3000"></textarea>
+  <div class="row"><div class="grow"><label class="f" for="pd">Fecha de entrega (opcional)</label><input type="date" id="pd" name="due"></div><div class="grow"><label class="f" for="pm">Materia</label><select id="pm" name="subjectId">${subjOptions('')}</select></div></div>
+  <div class="acts"><button class="btn pri">Añadir (+${PROJ_PCT}% al completarlo)</button></div></form>`;
+}
+
+function pomoLeft() { const p = S.pomo; return p.running ? Math.max(0, Math.ceil((p.endAt - Date.now()) / 1000)) : p.remaining; }
+function viewFoco() {
+  const p = S.pomo, left = pomoLeft(), C = 2 * Math.PI * 100, total = POMO_DUR[p.mode];
+  const pend = S.items.filter(i => !i.done);
+  const task = pend.find(i => i.id === p.taskId);
+  const today_n = p.counts[today()] || 0;
+  return `<div class="card" style="text-align:center">
+    <div class="seg" role="group">${[['foco', '🍅 Foco 25'], ['corto', '☕ Corto 5'], ['largo', '🛋️ Largo 15']].map(([k, l]) => `<button aria-pressed="${p.mode === k}" data-act="pomo-mode" data-m="${k}">${l}</button>`).join('')}</div>
+    <div class="ring"><svg viewBox="0 0 230 230"><circle cx="115" cy="115" r="100" fill="none" stroke="var(--soft)" stroke-width="14"/><circle id="pring" cx="115" cy="115" r="100" fill="none" stroke="var(--brand2)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - left / total)}"/></svg><div class="tx" id="ptime">${pad(Math.floor(left / 60))}:${pad(left % 60)}</div></div>
+    <div class="row" style="justify-content:center"><button class="btn pri" id="pbtn" data-act="pomo-toggle" style="min-width:130px;font-size:16px">${p.running ? '⏸ Pausar' : (left < total ? '▶ Continuar' : '▶ Iniciar')}</button><button class="btn" data-act="pomo-reset">↺ Reiniciar</button></div>
+    <p class="muted">Pomodoros completados hoy: <b>${today_n}</b> ${'🍅'.repeat(Math.min(today_n, 8))}</p></div>
+  <div class="card"><h2>🎯 ¿En qué te vas a enfocar?</h2>
+    <select data-change="pomo-task" aria-label="Tarea en la que te enfocas"><option value="">— Sin tarea específica —</option>${pend.sort(cmpDue).map(i => `<option value="${i.id}" ${i.id === p.taskId ? 'selected' : ''}>${esc(KINDS[i.kind].icon + ' ' + i.title)}</option>`).join('')}</select>
+    ${task ? `<div class="acts" style="justify-content:flex-start"><button class="btn sm" data-act="verify" data-id="${task.id}">✔ Ya la terminé (+${pctOf(task)}%)</button></div>` : ''}</div>
+  <div class="card row"><div style="width:90px">${mascotSVG(curStage(), S.mascot.equipped)}</div><div class="grow muted"><b style="color:var(--ink)">${esc(S.mascot.name)}</b> te acompaña mientras estudias. Su nivel sube al <b>verificar tareas, lecturas y proyectos</b>; el temporizador te ayuda a concentrarte para lograrlo.</div></div>`;
+}
+let selectedResource = 'quiz';
+let ocrLibraryPromise = null;
+let imagePreviewUrl = null;
+function viewAssistant() {
+  return `<div class="card"><div class="row"><h2 class="grow">✧ Asistente de estudio</h2><span class="chip">MODO ESTUDIO</span></div>
+    <p class="muted">Pega tus apuntes o carga una foto. Los recursos se construyen solo con el material que compartas; si el texto no contiene una respuesta, no la inventaremos.</p>
+    <label class="f" for="ai-source">Texto de tus apuntes o lectura</label><textarea id="ai-source" class="ai-source" maxlength="30000" placeholder="Pega aquí el texto que quieres estudiar…"></textarea>
+    <label class="f" for="ai-image">O elige una foto de tus apuntes</label><input id="ai-image" type="file" accept="image/*" capture="environment">
+    <img id="ai-image-preview" class="ai-preview" alt="Vista previa de la foto seleccionada" hidden>
+    <div class="row" style="margin-top:8px"><button class="btn sm" data-act="ai-read-image">📷 Leer texto de la foto</button><span id="ai-ocr-status" class="ai-status" role="status" aria-live="polite"></span></div>
+    <p class="ai-note">La foto se procesa en este dispositivo. La primera vez se necesita internet para cargar el motor y los datos de OCR en español; la imagen no se envía a un servicio de IA.</p>
+    <label class="f">Elige un recurso de repaso</label><div class="ai-tabs" role="group" aria-label="Tipo de recurso">
+      <button class="btn sm ${selectedResource === 'quiz' ? 'pri' : ''}" aria-pressed="${selectedResource === 'quiz'}" data-act="ai-kind" data-kind="quiz">🧠 Cuestionario</button>
+      <button class="btn sm ${selectedResource === 'game' ? 'pri' : ''}" aria-pressed="${selectedResource === 'game'}" data-act="ai-kind" data-kind="game">🎮 Juego</button>
+      <button class="btn sm ${selectedResource === 'cards' ? 'pri' : ''}" aria-pressed="${selectedResource === 'cards'}" data-act="ai-kind" data-kind="cards">🗂️ Tarjetas</button>
+      <button class="btn sm ${selectedResource === 'organizer' ? 'pri' : ''}" aria-pressed="${selectedResource === 'organizer'}" data-act="ai-kind" data-kind="organizer">🕸️ Organizador</button>
+      <button class="btn sm ${selectedResource === 'guide' ? 'pri' : ''}" aria-pressed="${selectedResource === 'guide'}" data-act="ai-kind" data-kind="guide">📖 Guía breve</button>
+    </div>
+    <button class="btn pri" style="width:100%;margin-top:12px" data-act="ai-generate">Crear recurso de estudio ✨</button>
+    <div id="ai-result" class="ai-output" aria-live="polite" hidden></div>
+    <p class="ai-note">🛡️ Es una herramienta de repaso: las respuestas y pistas salen de tus apuntes. Verifica siempre el resultado con tu material original.</p></div>`;
+}
+const AI_STOPWORDS = new Set('para como donde cuando desde hasta sobre entre porque pero sino aunque este esta estos estas ese esa esos esas los las del con sin una uno unas unos por sus ser fue son hay cada puede pueden todo toda todos todas muy más menos también cuyo cuya cual cuales quien quienes que qué cual al la el de en y o u a es se su lo le les ya no si sí'.split(' '));
+function sourceSentences(text) {
+  return text.replace(/\r/g, '').split(/(?<=[.!?])\s+|\n+/).map(s => s.replace(/^[\s•*\-–\d.)]+/, '').trim()).filter(s => s.length >= 24);
+}
+function sourceTerms(text) {
+  const counts = new Map();
+  for (const word of text.match(/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9-]{4,}/g) || []) {
+    const key = word.toLocaleLowerCase('es');
+    if (!AI_STOPWORDS.has(key)) counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  return [...counts].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 20).map(([word]) => word);
+}
+function termsInSentence(sentence, terms) {
+  const lower = sentence.toLocaleLowerCase('es');
+  return terms.filter(word => lower.includes(word)).sort((a, b) => b.length - a.length);
+}
+function aiCloze(sentence, term) {
+  if (!term) return esc(sentence);
+  const at = sentence.toLocaleLowerCase('es').indexOf(term);
+  return esc(sentence.slice(0, at)) + '<b>________</b>' + esc(sentence.slice(at + term.length));
+}
+function buildQuiz(sentences, terms) {
+  const entries = sentences.slice(0, 8).map(sentence => ({ sentence, term: termsInSentence(sentence, terms)[0] }));
+  return `<h3>Cuestionario basado en tus apuntes</h3><p>Completa cada frase con la palabra que falta. Las respuestas son fragmentos exactos de tu material.</p>${entries.map(({ sentence, term }, i) => `<div class="ai-question"><b>${i + 1}. ${aiCloze(sentence, term)}</b><details><summary>Mostrar respuesta en mis apuntes</summary><p>${esc(sentence)}</p></details></div>`).join('')}`;
+}
+function buildCards(sentences, terms) {
+  const entries = sentences.slice(0, 12).map(sentence => ({ sentence, term: termsInSentence(sentence, terms)[0] }));
+  return `<h3>Tarjetas de repaso</h3>${entries.map(({ sentence, term }, i) => `<div class="ai-question"><b>Tarjeta ${i + 1}: ¿Qué dice el material sobre «${esc(term || 'esta idea')}»?</b><details><summary>Voltear tarjeta</summary><p>${esc(sentence)}</p></details></div>`).join('')}`;
+}
+function buildGame(sentences, terms) {
+  const pairs = [];
+  for (const sentence of sentences) {
+    const term = termsInSentence(sentence, terms)[0];
+    if (term && !pairs.some(pair => pair.term === term)) pairs.push({ term, sentence });
+    if (pairs.length === 5) break;
+  }
+  if (pairs.length < 2) return '<h3>Juego de pistas</h3><p>Necesito al menos dos ideas distintas en tus apuntes para crear un juego de emparejar. Añade más texto e inténtalo otra vez.</p>';
+  return `<h3>🎮 Empareja la idea con su frase</h3><p>Elige la frase de tus apuntes donde aparece cada concepto.</p>${pairs.map((pair, i) => {
+    const choices = pairs.map((candidate, j) => ({ ...candidate, original: j })).sort((a, b) => ((a.original + i) % pairs.length) - ((b.original + i) % pairs.length));
+    return `<section class="ai-question" data-game-question="${i}" data-answer="${choices.findIndex(choice => choice.original === i)}"><b>${i + 1}. ¿Qué frase incluye «${esc(pair.term)}»?</b>${choices.map((choice, j) => `<label><input type="radio" name="ai-game-${i}" value="${j}"><span>${esc(choice.sentence)}</span></label>`).join('')}<button class="btn sm" type="button" data-act="ai-game-check">Comprobar</button><p class="ai-feedback" aria-live="polite"></p></section>`;
+  }).join('')}`;
+}
+function buildOrganizer(sentences, terms) {
+  const center = sentences[0];
+  const branches = sentences.slice(1, 8);
+  return `<h3>Organizador gráfico: mapa de ideas</h3><p>Idea central (primera idea del material):</p><div class="card" style="text-align:center"><b>${esc(center)}</b></div><div class="pet-choice">${branches.length ? branches.map(sentence => `<div class="card"><b>${esc(termsInSentence(sentence, terms)[0] || 'Idea relacionada')}</b><p class="muted">${esc(sentence)}</p><span class="muted">Conecta esta frase con la idea central usando una flecha.</span></div>`).join('') : '<p>Agrega más frases para formar ramas a partir de la idea central.</p>'}</div><p>Las ramas conservan el orden en que aparecen en tu texto.</p>`;
+}
+function buildGuide(sentences) {
+  return `<h3>Guía de repaso hecha con tu material</h3><ol>${sentences.slice(0, 8).map(sentence => `<li>${esc(sentence)}</li>`).join('')}</ol><p>No se añadieron datos externos.</p>`;
+}
+function generateStudyResource() {
+  const text = $('#ai-source').value.trim(), output = $('#ai-result');
+  if (!text) {
+    toast('Pega tus apuntes o carga una foto y pulsa «Leer texto de la foto» antes de generar.');
+    $('#ai-source').focus();
+    return;
+  }
+  const sentences = sourceSentences(text), terms = sourceTerms(text);
+  if (!sentences.length) { toast('No encontré frases suficientes. Añade más texto de tus apuntes.'); return; }
+  const builders = { quiz: () => buildQuiz(sentences, terms), cards: () => buildCards(sentences, terms), game: () => buildGame(sentences, terms), organizer: () => buildOrganizer(sentences, terms), guide: () => buildGuide(sentences) };
+  output.innerHTML = builders[selectedResource]();
+  output.hidden = false;
+}
+function loadOcrLibrary() {
+  if (window.Tesseract) return Promise.resolve(window.Tesseract);
+  if (ocrLibraryPromise) return ocrLibraryPromise;
+  ocrLibraryPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    script.async = true;
+    script.onload = () => window.Tesseract ? resolve(window.Tesseract) : reject(new Error('El motor OCR no se inicializó.'));
+    script.onerror = () => reject(new Error('No se pudo cargar el OCR. Revisa tu conexión a internet e inténtalo de nuevo.'));
+    document.head.appendChild(script);
+  }).catch(error => { ocrLibraryPromise = null; throw error; });
+  return ocrLibraryPromise;
+}
+async function readImageText() {
+  const file = $('#ai-image').files[0], status = $('#ai-ocr-status'), button = document.querySelector('[data-act="ai-read-image"]');
+  if (!file) { status.textContent = 'Elige una imagen primero.'; return; }
+  if (!file.type.startsWith('image/')) { status.textContent = 'El archivo seleccionado no es una imagen.'; return; }
+  if (file.size > 12e6) { status.textContent = 'La imagen supera el límite de 12 MB.'; return; }
+  button.disabled = true;
+  status.textContent = 'Cargando OCR en español… la imagen se procesa localmente.';
+  let worker;
+  try {
+    const Tesseract = await loadOcrLibrary();
+    worker = await Tesseract.createWorker('spa', 1, {
+      logger: message => { if (message.status === 'recognizing text') status.textContent = `Leyendo foto: ${Math.round(message.progress * 100)}%`; }
+    });
+    const { data } = await worker.recognize(file);
+    const extracted = String(data.text || '').trim();
+    if (!extracted) { status.textContent = 'No se encontró texto legible. Prueba con una foto más nítida o pega el texto.'; return; }
+    const source = $('#ai-source');
+    source.value = `${source.value.trim()}${source.value.trim() ? '\n\n' : ''}${extracted}`.slice(0, 30000);
+    status.textContent = 'Texto añadido a tus apuntes. Revísalo y corrige errores del OCR antes de generar el repaso.';
+    toast('Texto de la foto leído en este dispositivo.');
+  } catch (error) {
+    console.error('No se pudo leer el texto de la imagen.', error);
+    status.textContent = error instanceof Error ? error.message : 'No se pudo procesar la foto.';
+  } finally {
+    try {
+      if (worker) await worker.terminate();
+    } catch (error) {
+      console.error('No se pudo liberar el motor OCR.', error);
+      status.textContent = 'El OCR terminó, pero no se pudo liberar el motor. Puedes continuar o volver a intentarlo.';
+    } finally {
+      button.disabled = false;
+    }
+  }
+}
+function previewStudyImage() {
+  const file = $('#ai-image').files[0], preview = $('#ai-image-preview'), status = $('#ai-ocr-status');
+  if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+  imagePreviewUrl = null;
+  preview.hidden = !file;
+  status.textContent = '';
+  if (file && file.type.startsWith('image/')) { imagePreviewUrl = URL.createObjectURL(file); preview.src = imagePreviewUrl; }
+}
+function updatePomoDom() {
+  const t = $('#ptime'); if (!t) { syncTitle(); return; }
+  const p = S.pomo, left = pomoLeft(), C = 2 * Math.PI * 100;
+  t.textContent = `${pad(Math.floor(left / 60))}:${pad(left % 60)}`;
+  $('#pring').setAttribute('stroke-dashoffset', C * (1 - left / POMO_DUR[p.mode]));
+  const b = $('#pbtn'); if (b) b.textContent = p.running ? '⏸ Pausar' : (left < POMO_DUR[p.mode] ? '▶ Continuar' : '▶ Iniciar');
+  syncTitle();
+}
+function beep() { try { const a = new (window.AudioContext || window.webkitAudioContext)(); [0, .25, .5].forEach((t, i) => { const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 660 + i * 110; g.gain.value = .15; o.connect(g); g.connect(a.destination); o.start(a.currentTime + t); o.stop(a.currentTime + t + .18); }); } catch { /* sin audio */ } }
+function pomoFinish() {
+  const p = S.pomo; const was = p.mode; p.running = false; p.endAt = null;
+  if (was === 'foco') { p.counts[today()] = (p.counts[today()] || 0) + 1; p.cycle = (p.cycle || 0) + 1; p.mode = p.cycle % 4 === 0 ? 'largo' : 'corto'; }
+  else p.mode = 'foco';
+  p.remaining = POMO_DUR[p.mode]; save(); beep();
+  pushNotice(was === 'foco' ? '🍅 ¡Pomodoro completado!' : '⏰ Descanso terminado', was === 'foco' ? `Toma un descanso de ${p.mode === 'largo' ? 15 : 5} min.` : 'Vuelve a enfocarte.');
+  if (ui.tab === 'foco') render();
+}
+setInterval(() => { const p = S.pomo; if (p.running && Date.now() >= p.endAt) pomoFinish(); updatePomoDom(); }, 500);
+
+function viewTienda() {
+  const slot = ui.shopSlot, eq = S.mascot.equipped;
+  const tabs = `<div class="seg" style="margin-bottom:12px">${Object.entries(SLOTS).map(([k, l]) => `<button aria-pressed="${slot === k}" data-act="shop-slot" data-s="${k}">${l}</button>`).join('')}</div>`;
+  const items = SHOP.filter(i => i.slot === slot).map(i => {
+    const owned = S.mascot.owned.includes(i.id), on = eq[slot] === i.id, can = S.papois >= i.price;
+    const prev = mascotSVG(curStage(), { ...eq, [slot]: i.id });
+    const btn = on ? (DEFAULT_SLOT[slot] ? '<button class="btn sm" disabled>En uso</button>' : `<button class="btn sm" data-act="unequip" data-s="${slot}">Quitar</button>`)
+      : owned ? `<button class="btn sm pri" data-act="equip" data-id="${i.id}">Equipar</button>`
+      : `<button class="btn sm pri" data-act="buy" data-id="${i.id}" ${can ? '' : 'disabled'}>🪙 ${i.price}${can ? '' : ` (faltan ${i.price - S.papois})`}</button>`;
+    return `<div class="si ${on ? 'eq' : ''}">${prev}<b>${esc(i.name)}</b>${btn}</div>`;
+  }).join('');
+  return `<div class="card row"><div style="width:150px">${mascotSVG(curStage(), eq, 'Vista previa')}</div><div class="grow"><h2 style="margin:0 0 6px">🛍️ Tienda de ${esc(S.mascot.name)}</h2><span class="chip" style="font-size:15px">🪙 ${S.papois} PAPOIS</span><p class="muted">Gana PAPOIS completando tareas, lecturas y proyectos: ganas tantos PAPOIS como % de dificultad.</p></div></div>${tabs}<div class="shop">${items}</div>`;
+}
+
+const VIEWS = { home: viewHome, agenda: viewAgenda, horario: viewHorario, plan: viewPlan, foco: viewFoco, tienda: viewTienda, asistente: viewAssistant };
+function render() {
+  $('#view').innerHTML = VIEWS[ui.tab]();
+  document.querySelectorAll('#tabs button').forEach(b => b.dataset.tab === ui.tab ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+  $('.fab').style.display = ['horario', 'tienda', 'foco', 'asistente'].includes(ui.tab) ? 'none' : '';
+  updateBell();
+}
+
+// ---------- formularios y diálogos ----------
+function itemForm(it, prefill) {
+  const v = it || { kind: 'tarea', difficulty: 'media', mode: 'dia', leadN: 1, leadUnit: 'd', due: prefill || '', dueTime: '', notes: '', ref: '', subjectId: '', urgent: false, important: false };
+  const lockedKind = !!it;
+  return `<div class="dc"><h3>${it ? 'Editar' : 'Nueva'} ${it ? KINDS[it.kind].label.toLowerCase() : 'tarea o lectura'}</h3>
+  <form data-form="item" data-id="${it ? it.id : ''}">
+    ${lockedKind ? '' : `<div class="opt" style="--c:var(--brand2)"><label><input type="radio" name="kind" value="tarea" ${v.kind === 'tarea' ? 'checked' : ''}>📝 Tarea</label><label><input type="radio" name="kind" value="lectura" ${v.kind === 'lectura' ? 'checked' : ''}>📖 Lectura</label></div>`}
+    <label class="f" for="it_t">Título</label><input type="text" id="it_t" name="title" maxlength="120" required value="${esc(v.title || '')}" autocomplete="off">
+    <div id="refbox"><label class="f" for="it_r">Páginas o capítulo (opcional)</label><input type="text" id="it_r" name="ref" maxlength="80" value="${esc(v.ref || '')}" placeholder="Ej. Cap. 3, pp. 40–65"></div>
+    <label class="f" for="it_s">Materia</label><select id="it_s" name="subjectId">${subjOptions(v.subjectId)}</select>
+    <label class="f">Dificultad (define el % de nivel y los PAPOIS)</label>
+    <div class="opt">${Object.entries(DIFF).map(([k, d]) => `<label style="--c:${d.color}"><input type="radio" name="difficulty" value="${k}" ${v.difficulty === k ? 'checked' : ''}>${d.label}<br><small>+${d.pct}%</small></label>`).join('')}</div>
+    <label class="f">Entrega</label>
+    <div class="opt" style="--c:var(--brand2)"><label><input type="radio" name="mode" value="manana" ${v.mode === 'manana' ? 'checked' : ''}>De un día para otro</label><label><input type="radio" name="mode" value="dia" ${v.mode !== 'manana' ? 'checked' : ''}>Elegir el día</label></div>
+    <div id="m_manana" class="muted" style="margin-top:8px">Se entrega <b>mañana</b>. Te aviso <b>hoy a las 5:00 pm</b> (antes de las 6 pm).</div>
+    <div id="m_dia"><div class="row"><div class="grow"><label class="f" for="it_d">Día de entrega</label><input type="date" id="it_d" name="due" value="${esc(v.due || '')}"></div><div class="grow"><label class="f" for="it_h">Hora (opcional)</label><input type="time" id="it_h" name="dueTime" value="${esc(v.dueTime || '')}"></div></div>
+      <label class="f">Avisarme con anticipación</label><div class="row"><input type="number" name="leadN" min="1" max="99" value="${v.leadN ?? 1}" style="width:90px"><select name="leadUnit" style="width:auto"><option value="d" ${v.leadUnit !== 'h' ? 'selected' : ''}>días antes</option><option value="h" ${v.leadUnit === 'h' ? 'selected' : ''}>horas antes</option></select></div>
+      <div class="muted" style="margin-top:4px">Sin hora, cuenta hasta las 11:59 pm del día elegido.</div></div>
+    <label class="f" for="it_n">Notas (opcional)</label><textarea id="it_n" name="notes" maxlength="3000">${esc(v.notes || '')}</textarea>
+    <details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Prioridad (matriz de Eisenhower)</summary><div class="row" style="margin-top:8px"><label><input type="checkbox" name="urgent" ${v.urgent ? 'checked' : ''}> Urgente</label><label><input type="checkbox" name="important" ${v.important ? 'checked' : ''}> Importante</label></div></details>
+    <div class="err" id="ferr" role="alert"></div>
+    <div class="acts"><button type="button" class="btn" data-act="close">Cancelar</button><button class="btn pri">${it ? 'Guardar' : 'Añadir'}</button></div></form></div>`;
+}
+function syncItemForm(f) {
+  const mode = f.elements.mode.value, kind = f.elements.kind ? f.elements.kind.value : (f.dataset.kind || 'tarea');
+  $('#m_manana', f).hidden = mode !== 'manana'; $('#m_dia', f).hidden = mode === 'manana';
+  $('#refbox', f).hidden = kind !== 'lectura';
+}
+function openItemForm(it, prefill) {
+  openDlg(itemForm(it, prefill), d => { const f = $('form', d); if (it) f.dataset.kind = it.kind; syncItemForm(f); f.addEventListener('change', () => syncItemForm(f)); setTimeout(() => f.elements.title.focus(), 30); });
+}
+function submitItemForm(f) {
+  const fd = new FormData(f), id = f.dataset.id; const err = m => { $('#ferr', f).textContent = m; };
+  const title = String(fd.get('title') || '').trim(); if (!title) return err('Escribe un título.');
+  const mode = fd.get('mode') || 'dia';
+  let due = String(fd.get('due') || ''); const old = id ? S.items.find(x => x.id === id) : null;
+  if (mode === 'manana') due = old && old.mode === 'manana' ? old.due : ymd(addDays(new Date(), 1));
+  else if (!due) return err('Elige el día de entrega.');
+  const base = { title, subjectId: String(fd.get('subjectId') || ''), difficulty: DIFF[fd.get('difficulty')] ? fd.get('difficulty') : 'media', mode, due, dueTime: mode === 'dia' ? String(fd.get('dueTime') || '') : '', leadN: Math.max(1, Math.min(99, parseInt(fd.get('leadN')) || 1)), leadUnit: fd.get('leadUnit') === 'h' ? 'h' : 'd', notes: String(fd.get('notes') || '').trim(), ref: String(fd.get('ref') || '').trim(), urgent: !!fd.get('urgent'), important: !!fd.get('important') };
+  if (old) Object.assign(old, base);
+  else S.items.push({ id: uid(), kind: fd.get('kind') === 'lectura' ? 'lectura' : 'tarea', source: 'manual', done: false, createdAt: Date.now(), evidence: [], ...base });
+  save(); closeDlg(); render(); checkReminders();
+  toast(old ? 'Cambios guardados' : 'Añadida a tu agenda');
+}
+function quadrant(it) {
+  const imp = isProj(it) ? true : !!it.important;
+  const urg = isProj(it) ? (it.due ? diffDays(today(), it.due) <= REMIND_PROJECT_DAYS : false) : !!it.urgent;
+  return urg && imp ? 'Q1 · Hacer ahora' : !urg && imp ? 'Q2 · Planificar' : urg ? 'Q3 · Hacer rápido' : 'Q4 · Posponer';
+}
+async function openDetail(id) {
+  const it = S.items.find(x => x.id === id); if (!it) return;
+  const s = subjOf(it), r = reminderAt(it); const urls = [];
+  const canDate = isProj(it) && !it.done && !it.locked;
+  openDlg(`<div class="dc"><h3>${KINDS[it.kind].icon} ${esc(it.title)}</h3>
+    <div class="row"><span class="chip c" style="--c:${colorOf(it)}">${isProj(it) ? KINDS[it.kind].label : DIFF[it.difficulty].label} · +${pctOf(it)}% · +${pctOf(it)} 🪙</span>${it.done ? '<span class="chip">✓ Verificada</span>' : isOverdue(it) ? '<span class="chip c" style="--c:#dc2626">Vencida</span>' : ''}</div>
+    <div class="kv"><b>Materia</b><span>${s ? esc(s.name) : '—'}</span><b>Entrega</b><span>${it.due ? esc(fmtDate(it.due)) + (it.dueTime ? ', ' + esc(it.dueTime) : '') + (it.locked ? ' 🔒 (fijada por la rúbrica)' : '') : 'Sin fecha'}</span>
+      <b>Aviso</b><span>${it.done ? '—' : r ? (S.notified[`${it.id}:${r.getTime()}`] ? 'Ya avisado · ' : '') + esc(fmtDT(r)) : 'Sin aviso (falta la fecha)'}</span>
+      ${it.ref ? `<b>Lectura</b><span>${esc(it.ref)}</span>` : ''}<b>Prioridad</b><span>${quadrant(it)}</span>${it.done ? `<b>Hecha</b><span>${esc(new Date(it.doneAt).toLocaleString())}</span>` : ''}</div>
+    ${it.specs ? `<div class="group">Especificaciones</div><div class="pre">${esc(it.specs)}</div>` : ''}
+    ${it.notes ? `<div class="group">Notas</div><div class="pre">${esc(it.notes)}</div>` : ''}
+    ${canDate ? `<div class="group">Fecha de entrega</div><div class="row"><input type="date" id="pdate" value="${esc(it.due || '')}" style="max-width:190px"><button class="btn sm" data-act="save-date" data-id="${it.id}">Guardar fecha</button></div><div class="muted">${it.due ? '' : 'Esta rúbrica no traía fecha: puedes ponerla tú.'}</div>` : ''}
+    ${(it.evidence || []).length ? `<div class="group">Evidencias</div><div class="ev" id="evbox"><span class="muted">Cargando…</span></div>` : ''}
+    <div class="acts"><button class="btn dng" data-act="delete" data-id="${it.id}">🗑 Eliminar</button>${!it.done && (!isProj(it)) ? `<button class="btn" data-act="edit-item" data-id="${it.id}">✏️ Editar</button>` : ''}${!it.done ? `<button class="btn pri" data-act="verify" data-id="${it.id}">✔ Verificar</button>` : ''}<button class="btn" data-act="close">Cerrar</button></div></div>`,
+  () => () => urls.forEach(u => URL.revokeObjectURL(u)));
+  const box = $('#evbox');
+  if (box) { box.innerHTML = ''; for (const eid of it.evidence) { try { const r2 = await getFile(eid); if (!r2) continue; const u = URL.createObjectURL(r2.blob); urls.push(u);
+      if (/^image\//.test(r2.type)) { const im = document.createElement('img'); im.src = u; im.alt = r2.name; box.appendChild(im); } else { const a = document.createElement('a'); a.href = u; a.download = r2.name; a.textContent = '📎 ' + r2.name; box.appendChild(a); } } catch { /* evidencia no disponible */ } }
+    if (!box.children.length) box.innerHTML = '<span class="muted">Las evidencias ya no están disponibles en este navegador.</span>'; }
+}
+function openVerify(id) {
+  const it = S.items.find(x => x.id === id); if (!it || it.done) return;
+  openDlg(`<div class="dc"><h3>✔ Verificar entrega</h3><p style="margin:4px 0 10px"><b>${esc(it.title)}</b></p>
+  <div class="card" style="background:var(--soft);margin:0"><b>Recompensa:</b> +${pctOf(it)}% de nivel para ${esc(S.mascot.name)} y +${pctOf(it)} 🪙 PAPOIS</div>
+  <form data-form="verify" data-id="${it.id}"><label style="display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-weight:700"><input type="checkbox" name="ok" style="width:22px;height:22px;flex:none"> Confirmo que realmente realicé / entregué esto.</label>
+  <label class="f" for="evf">Evidencia (opcional): foto o PDF</label><input type="file" id="evf" name="files" multiple accept="image/*,application/pdf">
+  <div class="muted">Se guarda solo en este dispositivo. Solo puedes verificar una vez: no se puede deshacer.</div>
+  <div class="err" id="ferr" role="alert"></div><div class="acts"><button type="button" class="btn" data-act="close">Cancelar</button><button class="btn pri" id="vbtn">Verificar y recibir recompensa</button></div></form></div>`);
+}
+function subjectForm(sub) {
+  const v = sub || { name: '', teacher: '', color: SUBJECT_COLORS[S.subjects.length % SUBJECT_COLORS.length], slots: [{ day: 0, start: '08:00', end: '09:00', room: '' }] };
+  return `<div class="dc"><h3>${sub ? 'Editar' : 'Nueva'} materia</h3><form data-form="subject" data-id="${sub ? sub.id : ''}">
+  <label class="f" for="sn">Nombre</label><input type="text" id="sn" name="name" maxlength="60" required value="${esc(v.name)}">
+  <label class="f" for="st">Profesor/a (opcional)</label><input type="text" id="st" name="teacher" maxlength="60" value="${esc(v.teacher || '')}">
+  <label class="f">Color</label><div class="sw">${SUBJECT_COLORS.map(c => `<label style="--c:${c}"><input type="radio" name="color" value="${c}" ${c === v.color ? 'checked' : ''} aria-label="Color ${c}"></label>`).join('')}</div>
+  <label class="f">Horario</label><div id="slots">${v.slots.map(slotRow).join('')}</div><button type="button" class="btn sm" data-act="add-slot">＋ Otro horario</button>
+  <div class="err" id="ferr" role="alert"></div>
+  <div class="acts">${sub ? `<button type="button" class="btn dng" data-act="del-subject" data-id="${sub.id}">Eliminar</button>` : ''}<button type="button" class="btn" data-act="close">Cancelar</button><button class="btn pri">Guardar</button></div></form></div>`;
+}
+const slotRow = sl => `<div class="slot"><select name="sd" aria-label="Día">${DAYS.map((d, i) => `<option value="${i}" ${i === sl.day ? 'selected' : ''}>${d}</option>`).join('')}</select><input type="time" name="ss" value="${esc(sl.start)}" aria-label="Inicio" required><input type="time" name="se" value="${esc(sl.end)}" aria-label="Fin" required><button type="button" class="btn sm" data-act="rm-slot" aria-label="Quitar horario">✕</button><input type="text" name="sr" class="room" maxlength="30" placeholder="Salón (opcional)" value="${esc(sl.room || '')}"></div>`;
+function submitSubject(f) {
+  const fd = new FormData(f), id = f.dataset.id, err = m => { $('#ferr', f).textContent = m; };
+  const name = String(fd.get('name') || '').trim(); if (!name) return err('Escribe el nombre de la materia.');
+  const slots = [...f.querySelectorAll('.slot')].map(r => ({ day: +r.querySelector('[name=sd]').value, start: r.querySelector('[name=ss]').value, end: r.querySelector('[name=se]').value, room: r.querySelector('[name=sr]').value.trim() }));
+  if (slots.some(x => !x.start || !x.end || toMin(x.end) <= toMin(x.start))) return err('En cada horario, la hora de fin debe ser posterior a la de inicio.');
+  const data = { name, teacher: String(fd.get('teacher') || '').trim(), color: fd.get('color') || SUBJECT_COLORS[0], slots };
+  const old = id && S.subjects.find(x => x.id === id);
+  if (old) Object.assign(old, data); else S.subjects.push({ id: uid(), ...data });
+  save(); closeDlg(); render(); toast('Materia guardada');
+}
+
+// ---------- importar rúbrica / planeación ----------
+const MONTH_IDX = { ene: 0, feb: 1, mar: 2, abr: 3, may: 4, jun: 5, jul: 6, ago: 7, sep: 8, set: 8, oct: 9, nov: 10, dic: 11 };
+function validYmd(y, m, d) { const t = new Date(y, m, d); return t.getFullYear() === y && t.getMonth() === m && t.getDate() === d ? ymd(t) : null; }
+function parseDateLoose(str) {
+  str = String(str || '').trim(); if (!str) return null; let m;
+  if ((m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))) return validYmd(+m[1], m[2] - 1, +m[3]);
+  if ((m = str.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/))) return validYmd(+m[3] < 100 ? 2000 + +m[3] : +m[3], m[2] - 1, +m[1]);
+  if ((m = str.match(/^(\d{1,2})\s*(?:de\s+)?([a-záéíóú]{3,})\.?(?:\s*(?:de|del)?\s*(\d{4}))?$/i))) {
+    const mi = MONTH_IDX[m[2].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').slice(0, 3)]; if (mi === undefined) return null;
+    let y = m[3] ? +m[3] : new Date().getFullYear(); let r = validYmd(y, mi, +m[1]);
+    if (r && !m[3] && diffDays(today(), r) < -60) r = validYmd(y + 1, mi, +m[1]);
+    return r;
+  }
+  return null;
+}
+function extractDate(line) { const m = line.match(/\b(\d{4}-\d{1,2}-\d{1,2}|\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4})\b/); return m ? { date: parseDateLoose(m[1]), rest: line.replace(m[0], '').replace(/\s{2,}/g, ' ').replace(/[\s\-–:|,;]+$/, '').trim() } : { date: null, rest: line }; }
+function csvRows(text) {
+  const delim = (text.split('\n')[0].match(/;/g) || []).length > (text.split('\n')[0].match(/,/g) || []).length ? ';' : (text.includes('\t') ? '\t' : ',');
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) { const c = text[i];
+    if (q) { if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+    else if (c === '"') q = true; else if (c === delim) { row.push(cur); cur = ''; } else if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; } else if (c !== '\r') cur += c; }
+  row.push(cur); rows.push(row); return rows.filter(r => r.some(c => c.trim()));
+}
+const COLMAP = { nombre: 'title', proyecto: 'title', actividad: 'title', titulo: 'title', 'título': 'title', especificaciones: 'specs', descripcion: 'specs', 'descripción': 'specs', criterios: 'specs', detalles: 'specs', rubrica: 'specs', 'rúbrica': 'specs', fecha: 'date', entrega: 'date', 'fecha de entrega': 'date', materia: 'subject', asignatura: 'subject', curso: 'subject', tipo: 'kind' };
+function rowsToEntries(rows) {
+  let map = ['title', 'specs', 'date', 'subject', 'kind'];
+  const head = rows[0]?.map(c => COLMAP[c.trim().toLowerCase()]);
+  if (head && head.includes('title') && head.filter(Boolean).length >= 2) { map = head; rows = rows.slice(1); }
+  return rows.map(r => { const o = {}; r.forEach((c, i) => { if (map[i] && c.trim()) o[map[i]] = c.trim(); }); return o; }).filter(o => o.title);
+}
+function parseRubric(text, filename = '') {
+  text = String(text || '').replace(/^\uFEFF/, '').trim(); if (!text) return [];
+  if (/\.json$/i.test(filename) || /^[\[{]/.test(text)) {
+    try { let j = JSON.parse(text); if (!Array.isArray(j)) j = j.proyectos || j.items || j.actividades || [];
+      return j.map(o => { const g = (...ks) => { for (const k of ks) if (o[k] != null && String(o[k]).trim()) return String(o[k]).trim(); return ''; };
+        return { title: g('nombre', 'proyecto', 'titulo', 'título', 'title', 'actividad'), specs: g('especificaciones', 'descripcion', 'descripción', 'criterios', 'specs'), date: g('fecha', 'entrega', 'fecha_entrega', 'date'), subject: g('materia', 'asignatura', 'subject'), kind: g('tipo', 'kind') }; }).filter(o => o.title);
+    } catch { /* si no es JSON válido se procesa como texto */ } }
+  if (/\.csv$|\.tsv$/i.test(filename)) return rowsToEntries(csvRows(text));
+  const lines = text.split(/\r?\n/).filter(l => l.trim() && !l.trim().startsWith('#'));
+  const delim = lines.some(l => l.includes('|')) ? '|' : lines.some(l => l.includes('\t')) ? '\t' : lines.some(l => l.includes(';')) ? ';' : null;
+  if (delim) return rowsToEntries(lines.map(l => l.split(delim)));
+  return lines.map(l => { const { date, rest } = extractDate(l.trim().replace(/^[-*•\d.)\s]+(?=\S)/, '')); return { title: rest || l.trim(), date: date || '' }; }).filter(o => o.title);
+}
+function importRubric(entries) {
+  let added = 0, skipped = 0, noDate = 0, badDate = 0;
+  for (const e of entries) {
+    const title = e.title.slice(0, 120); let due = e.date ? parseDateLoose(e.date) : null; if (e.date && !due) badDate++;
+    let sub = null; const sn = (e.subject || '').trim();
+    if (sn) { sub = S.subjects.find(s => s.name.toLowerCase() === sn.toLowerCase()); if (!sub) { sub = { id: uid(), name: sn.slice(0, 60), teacher: '', color: SUBJECT_COLORS[S.subjects.length % SUBJECT_COLORS.length], slots: [] }; S.subjects.push(sub); } }
+    if (S.items.some(i => isProj(i) && i.title.toLowerCase() === title.toLowerCase() && (i.subjectId || '') === (sub?.id || '') && (i.due || '') === (due || ''))) { skipped++; continue; }
+    S.items.push({ id: uid(), kind: /pr[aá]ctica/i.test(e.kind || '') || (!e.kind && /^pr[aá]ctica/i.test(title)) ? 'practica' : 'proyecto', title, specs: (e.specs || '').slice(0, 3000), subjectId: sub?.id || '', due, dueTime: '', locked: !!due, source: 'rubrica', difficulty: 'dificil', mode: 'dia', done: false, createdAt: Date.now(), evidence: [] });
+    added++; if (!due) noDate++;
+  }
+  save(); return { added, skipped, noDate, badDate };
+}
+
+// ---------- ajustes, avisos, respaldo ----------
+function openSettings() {
+  const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+  openDlg(`<div class="dc"><h3>⚙️ Ajustes</h3>
+  <div class="group">Avisos</div><p class="muted" style="margin-top:0">Los avisos dentro de EDU-LAB solo se revisan mientras la página está abierta. Para que el calendario del dispositivo te avise aunque cierres esta app: exporta el archivo, ábrelo con Calendario, impórtalo y activa las notificaciones de ese calendario. Repite la exportación si cambias tus trabajos. Este HTML no puede programar alarmas del sistema por sí solo.</p>
+  <div class="row"><span class="chip">Avisos del navegador: ${perm === 'granted' ? 'activados mientras EDU-LAB está abierta' : perm === 'denied' ? 'bloqueados' : perm === 'unsupported' ? 'no disponibles' : 'sin activar'}</span>${perm === 'default' ? '<button class="btn sm pri" data-act="ask-perm">Activar</button>' : ''}<button class="btn sm pri" data-act="ics">📆 Exportar pendientes y alertas (.ics)</button></div>
+  <div class="group">Mascota</div><div class="row"><input type="text" id="mn" maxlength="20" value="${esc(S.mascot.name)}" style="max-width:220px" aria-label="Nombre de la mascota"><button class="btn sm" data-act="save-name">Guardar nombre</button></div>
+  <div class="group">Respaldo</div><div class="row"><button class="btn sm" data-act="backup">⬇ Exportar datos</button><label class="btn sm" style="margin:0">⬆ Importar<input type="file" id="impf" accept="application/json,.json" hidden></label></div>
+  <p class="muted">El respaldo incluye todo menos las fotos/PDF de evidencia.${memoryOnly ? ' <b>⚠ Este navegador no permite guardar datos: se perderán al cerrar.</b>' : ''}</p>
+  <div class="group" style="color:var(--danger)">Zona de peligro</div><button class="btn dng sm" data-act="wipe">Borrar todos mis datos</button>
+  <div class="acts"><button class="btn" data-act="close">Cerrar</button></div></div>`);
+}
+function openBell() {
+  S.notifications.forEach(n => n.read = true); save(); updateBell();
+  openDlg(`<div class="dc"><h3>🔔 Avisos</h3>${S.notifications.length ? S.notifications.map(n => `<div class="notif"><b>${esc(n.title)}</b><br>${esc(n.body)}<br><span class="muted">${esc(fmtDT(new Date(n.t)))}</span></div>`).join('') : '<div class="empty">Sin avisos por ahora.</div>'}<div class="acts">${S.notifications.length ? '<button class="btn dng sm" data-act="clear-notes">Limpiar</button>' : ''}<button class="btn" data-act="close">Cerrar</button></div></div>`);
+}
+function exportICS() {
+  const utc = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''); const loc = (s, t) => s.replace(/-/g, '') + 'T' + t.replace(':', '') + '00';
+  const e = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//EDU-LAB//ES', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:EDU-LAB - Trabajos pendientes']; let n = 0, alarms = 0;
+  for (const it of S.items) { if (it.done || !it.due) continue; n++; const due = dueMoment(it), planned = reminderAt(it);
+    const r = planned && planned.getTime() > Date.now() ? planned : new Date(Math.max(Date.now() + 60000, due.getTime() > Date.now() ? due.getTime() - 3600e3 : Date.now() + 60000));
+    L.push('BEGIN:VEVENT', `UID:${it.id}@edulab`, `DTSTAMP:${utc(new Date())}`);
+    if (it.dueTime) { const end = new Date(parseYmd(it.due, it.dueTime).getTime() + 3600e3); L.push(`DTSTART:${loc(it.due, it.dueTime)}`, `DTEND:${loc(ymd(end), pad(end.getHours()) + ':' + pad(end.getMinutes()))}`); }
+    else L.push(`DTSTART;VALUE=DATE:${it.due.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${ymd(addDays(parseYmd(it.due), 1)).replace(/-/g, '')}`);
+    L.push(`SUMMARY:${e(KINDS[it.kind].icon + ' ' + it.title)}`, `DESCRIPTION:${e([it.specs, it.notes].filter(Boolean).join('\n'))}`);
+    L.push('BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${e(`EDU-LAB: pendiente — ${it.title}`)}`, `TRIGGER;VALUE=DATE-TIME:${utc(r)}`, 'END:VALARM'); alarms++;
+    L.push('END:VEVENT'); }
+  L.push('END:VCALENDAR');
+  if (!n) return toast('No hay pendientes con fecha para exportar');
+  download(L.join('\r\n') + '\r\n', 'edulab-trabajos-pendientes.ics', 'text/calendar;charset=utf-8'); toast(`Exportados ${n} pendiente(s) y ${alarms} alerta(s). Impórtalos en el calendario del dispositivo.`);
+}
+
+// ---------- eventos ----------
+const A = {
+  tab: el => { ui.tab = el.dataset.tab; render(); scrollTo(0, 0); },
+  close: () => closeDlg(),
+  bell: openBell, settings: openSettings,
+  'new-item': el => openItemForm(null, el?.dataset?.date || ''),
+  'edit-item': el => { const it = S.items.find(x => x.id === el.dataset.id); if (it) openItemForm(it); },
+  'open-item': el => openDetail(el.dataset.id),
+  verify: el => openVerify(el.dataset.id),
+  'agenda-mode': el => { ui.agendaMode = el.dataset.m; render(); },
+  'list-filter': el => { ui.listFilter = el.dataset.f; render(); },
+  'plan-filter': el => { ui.planFilter = el.dataset.f; render(); },
+  'ai-kind': el => {
+    selectedResource = el.dataset.kind;
+    document.querySelectorAll('.ai-tabs button').forEach(b => {
+      const selected = b.dataset.kind === selectedResource;
+      b.setAttribute('aria-pressed', String(selected));
+      b.classList.toggle('pri', selected);
+    });
+    $('#ai-result').hidden = true;
+  },
+  'ai-generate': generateStudyResource,
+  'ai-read-image': readImageText,
+  'ai-game-check': el => {
+    const question = el.closest('[data-game-question]');
+    const selected = question.querySelector('input[type="radio"]:checked');
+    const feedback = question.querySelector('.ai-feedback');
+    if (!selected) { feedback.textContent = 'Elige una frase antes de comprobar.'; return; }
+    const correct = Number(selected.value) === Number(question.dataset.answer);
+    feedback.textContent = correct ? '¡Correcto! Esa frase está en tus apuntes.' : 'No coincide; revisa las frases del material e inténtalo otra vez.';
+    feedback.style.color = correct ? 'var(--brand)' : 'var(--danger)';
+  },
+  selday: el => { ui.sel = el.dataset.date; const d = parseYmd(ui.sel); ui.month = { y: d.getFullYear(), m: d.getMonth() }; render(); },
+  month: el => { const k = +el.dataset.d; if (k === 0) { const n = new Date(); ui.month = { y: n.getFullYear(), m: n.getMonth() }; ui.sel = today(); } else { const d = new Date(ui.month.y, ui.month.m + k, 1); ui.month = { y: d.getFullYear(), m: d.getMonth() }; } render(); },
+  rename: () => { const n = prompt('Nombre de tu mascota:', S.mascot.name); if (n && n.trim()) { S.mascot.name = n.trim().slice(0, 20); save(); render(); } },
+  'save-name': () => { const n = $('#mn').value.trim(); if (n) { S.mascot.name = n.slice(0, 20); save(); render(); toast('Nombre guardado'); } },
+  'edit-subject': el => openDlg(subjectForm(el.dataset.id ? S.subjects.find(s => s.id === el.dataset.id) : null)),
+  'add-slot': () => $('#slots').insertAdjacentHTML('beforeend', slotRow({ day: 0, start: '08:00', end: '09:00', room: '' })),
+  'rm-slot': el => { if (document.querySelectorAll('.slot').length > 1) el.closest('.slot').remove(); },
+  'del-subject': el => { const s = S.subjects.find(x => x.id === el.dataset.id); if (s && confirm(`¿Eliminar "${s.name}"? Sus tareas se conservan sin materia.`)) { S.subjects = S.subjects.filter(x => x !== s); S.items.forEach(i => { if (i.subjectId === s.id) i.subjectId = ''; }); save(); closeDlg(); render(); } },
+  delete: async el => { const it = S.items.find(x => x.id === el.dataset.id); if (it && confirm(`¿Eliminar "${it.title}"? ${it.done ? 'Los PAPOIS y el nivel ganados se conservan.' : ''}`)) { for (const e of it.evidence || []) await delFile(e); S.items = S.items.filter(x => x !== it); if (S.pomo.taskId === it.id) S.pomo.taskId = null; save(); closeDlg(); render(); } },
+  'save-date': el => { const it = S.items.find(x => x.id === el.dataset.id), v = $('#pdate').value; if (it && v && !it.locked) { it.due = v; save(); closeDlg(); render(); checkReminders(); toast('Fecha guardada'); } },
+  'rub-example': () => { $('#rubtxt').value = EXAMPLE; },
+  'rub-import': async () => {
+    const f = $('#rubfile').files[0]; let text = $('#rubtxt').value, name = '';
+    if (f) { if (f.size > 2e6) return toast('El archivo es demasiado grande (máx. 2 MB)'); text = await f.text(); name = f.name; }
+    const entries = parseRubric(text, name); if (!entries.length) return toast('No encontré proyectos en ese texto');
+    const r = importRubric(entries); render(); checkReminders();
+    toast(`Agregados: ${r.added}${r.skipped ? ` · repetidos: ${r.skipped}` : ''}${r.noDate ? ` · sin fecha: ${r.noDate}` : ''}${r.badDate ? ` · fechas no entendidas: ${r.badDate}` : ''}`);
+  },
+  'pomo-mode': el => { const p = S.pomo; if (p.running && !confirm('Esto detendrá el temporizador. ¿Continuar?')) return; p.running = false; p.endAt = null; p.mode = el.dataset.m; p.remaining = POMO_DUR[p.mode]; save(); render(); },
+  'pomo-toggle': () => { const p = S.pomo; if (p.running) { p.remaining = pomoLeft(); p.running = false; p.endAt = null; } else { p.running = true; p.endAt = Date.now() + p.remaining * 1000; try { if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch { } } save(); render(); },
+  'pomo-reset': () => { const p = S.pomo; p.running = false; p.endAt = null; p.remaining = POMO_DUR[p.mode]; save(); render(); },
+  'shop-slot': el => { ui.shopSlot = el.dataset.s; render(); },
+  buy: el => { const i = SHOP.find(x => x.id === el.dataset.id); if (!i || S.papois < i.price || S.mascot.owned.includes(i.id)) return; S.papois -= i.price; S.mascot.owned.push(i.id); S.mascot.equipped[i.slot] = i.id; save(); render(); toast(`¡${S.mascot.name} estrena: ${i.name}!`); },
+  equip: el => { const i = SHOP.find(x => x.id === el.dataset.id); if (i && S.mascot.owned.includes(i.id)) { S.mascot.equipped[i.slot] = i.id; save(); render(); } },
+  unequip: el => { delete S.mascot.equipped[el.dataset.s]; save(); render(); },
+  'ask-perm': async () => { try { await Notification.requestPermission(); } catch { } openSettings(); },
+  ics: exportICS,
+  'clear-notes': () => { S.notifications = []; save(); closeDlg(); updateBell(); },
+  backup: () => download(JSON.stringify(S, null, 1), `edulab-respaldo-${today()}.json`, 'application/json'),
+  wipe: async () => { if (!confirm('¿Borrar TODO (mascota, tareas, horario)? No se puede deshacer.')) return; try { const db = await idb(); db.close(); dbp = null; indexedDB.deleteDatabase('edulab-evidence'); } catch { } S = defaults(); save(); closeDlg(); render(); },
+};
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el || el.disabled) return; if (el.tagName === 'A') e.preventDefault(); const fn = A[el.dataset.act]; if (fn) { if (el.closest('.item') && el.dataset.act !== 'open-item') e.stopPropagation(); fn(el); } });
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches?.('.item[data-act]')) { e.preventDefault(); A['open-item'](e.target); } });
+document.addEventListener('submit', async e => {
+  const f = e.target.closest('[data-form]'); if (!f) return; e.preventDefault();
+  const k = f.dataset.form;
+  if (k === 'item') submitItemForm(f);
+  else if (k === 'subject') submitSubject(f);
+  else if (k === 'verify') {
+    if (!f.elements.ok.checked) { $('#ferr', f).textContent = 'Marca la casilla para confirmar que lo hiciste.'; return; }
+    const files = [...f.elements.files.files].filter(x => x.size <= 15e6); $('#vbtn').disabled = true; await completeItem(f.dataset.id, files);
+  } else if (k === 'plan-add') {
+    const fd = new FormData(f), due = String(fd.get('due') || '') || null, title = String(fd.get('title') || '').trim(); if (!title) return;
+    S.items.push({ id: uid(), kind: fd.get('kind') === 'practica' ? 'practica' : 'proyecto', title, specs: String(fd.get('specs') || '').trim(), subjectId: String(fd.get('subjectId') || ''), due, dueTime: '', locked: false, source: 'manual', difficulty: 'dificil', mode: 'dia', done: false, createdAt: Date.now(), evidence: [] });
+    save(); render(); checkReminders(); toast('Proyecto añadido');
+  }
+});
+document.addEventListener('change', async e => {
+  const t = e.target;
+  if (t.id === 'ai-image') previewStudyImage();
+  if (t.dataset.change === 'pomo-task') { S.pomo.taskId = t.value || null; save(); render(); }
+  if (t.id === 'impf' && t.files[0]) {
+    try { const j = JSON.parse(await t.files[0].text()); if (j.v !== 1 || !Array.isArray(j.items)) throw 0; if (!confirm('Esto reemplazará tus datos actuales. ¿Continuar?')) return; S = sanitize(j); save(); closeDlg(); render(); toast('Respaldo importado'); }
+    catch { toast('Ese archivo no es un respaldo válido'); }
+  }
+});
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { checkReminders(); updatePomoDom(); } });
+
+// ---------- arranque ----------
+if (S.pomo.running && S.pomo.endAt && Date.now() >= S.pomo.endAt) pomoFinish();
+render(); checkReminders(); setInterval(checkReminders, 30000);
+window.EDULAB = { get S() { return S; }, ui, render, checkReminders, reminderAt, parseDateLoose, parseRubric, importRubric, completeItem, levelOf, stageOf };
+</script>
+</body>
+</html>
